@@ -1,0 +1,69 @@
+{
+  "name": "@airdesk/remote-computer-use",
+  "version": "0.4.12",
+  "description": "Install the AirDesk remote computer use skill in English, Korean or Japanese and configure native or online AirDesk MCP.",
+  "type": "module",
+  "bin": {
+    "airdesk-remote-computer-use": "bin/cli.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT",
+  "author": "AirDesk-Inc",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AirDesk-Inc/remote-coumputer-use.git"
+  },
+  "homepage": "https://github.com/AirDesk-Inc/remote-coumputer-use#readme",
+  "bugs": {
+    "url": "https://github.com/AirDesk-Inc/remote-coumputer-use/issues"
+  },
+  "keywords": [
+    "airdesk",
+    "mcp",
+    "agent-skills",
+    "remote-desktop",
+    "computer-use",
+    "online-mcp",
+    "oauth",
+    "claude-plugin"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "bin/*.mjs",
+    "lib/*.mjs",
+    "lib/*.json",
+    "README.ko.md",
+    "SECURITY.md",
+    "TRADEMARKS.md",
+    "CONTRIBUTING.md",
+    "docs/*.md",
+    "docs/assets/*.svg",
+    "skills/remote-computer-use/SKILL.md",
+    "skills/remote-computer-use/LICENSE.txt",
+    "skills/remote-computer-use/THIRD_PARTY_NOTICES.md",
+    "skills/remote-computer-use/licenses/*.txt",
+    "skills/remote-computer-use/agents/*.yaml",
+    "skills/remote-computer-use/assets/*.md",
+    "skills/remote-computer-use/assets/*.svg",
+    "skills/remote-computer-use/references/*.md",
+    "skills/remote-computer-use/scripts/*.py",
+    "locales/*/SKILL.md",
+    "locales/*/agents/*.yaml",
+    "locales/*/references/*.md"
+  ],
+  "scripts": {
+    "test": "node --test tests/installer.test.mjs",
+    "build:plugins": "node scripts/build-plugins.mjs",
+    "check:plugins": "node scripts/build-plugins.mjs --check",
+    "check:package": "node scripts/check-package.mjs",
+    "prepublishOnly": "npm run check:package"
+  },
+  "dependencies": {
+    "smol-toml": "1.9.1"
+  }
+}

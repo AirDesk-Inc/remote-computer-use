@@ -1,0 +1,50 @@
+{
+  "name": "airdesk",
+  "owner": {
+    "name": "AirDesk-Inc",
+    "url": "https://airdesk.co.kr"
+  },
+  "description": "AirDesk remote computer use skills with the AirDesk online MCP server, in English, Korean and Japanese.",
+  "version": "0.4.12",
+  "plugins": [
+    {
+      "name": "remote-computer-use",
+      "source": "./plugins/remote-computer-use",
+      "description": "AirDesk remote computer use (RCU): operate an authorized remote Windows/macOS computer through AirDesk online MCP, with the target OS agent-desktop guide applied on every connection.",
+      "version": "0.4.12",
+      "category": "productivity",
+      "tags": [
+        "airdesk",
+        "mcp",
+        "remote-desktop",
+        "en"
+      ]
+    },
+    {
+      "name": "remote-computer-use-ko",
+      "source": "./plugins/remote-computer-use-ko",
+      "description": "AirDesk 원격 컴퓨터 사용(RCU): AirDesk 온라인 MCP로 허가된 원격 Windows/macOS 컴퓨터를 조작하고, 연결마다 대상 OS의 agent-desktop 가이드를 적용합니다.",
+      "version": "0.4.12",
+      "category": "productivity",
+      "tags": [
+        "airdesk",
+        "mcp",
+        "remote-desktop",
+        "ko"
+      ]
+    },
+    {
+      "name": "remote-computer-use-ja",
+      "source": "./plugins/remote-computer-use-ja",
+      "description": "AirDesk リモートコンピューター操作(RCU): AirDesk オンライン MCP で許可されたリモート Windows/macOS コンピューターを操作し、接続ごとに対象 OS の agent-desktop ガイドを適用します。",
+      "version": "0.4.12",
+      "category": "productivity",
+      "tags": [
+        "airdesk",
+        "mcp",
+        "remote-desktop",
+        "ja"
+      ]
+    }
+  ]
+}

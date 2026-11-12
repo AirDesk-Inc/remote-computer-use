@@ -1,0 +1,5 @@
+/LICENSE text eol=lf
+/.claude-plugin/** text=auto eol=lf
+/locales/** text=auto eol=lf
+/plugins/** text=auto eol=lf
+/skills/** text=auto eol=lf

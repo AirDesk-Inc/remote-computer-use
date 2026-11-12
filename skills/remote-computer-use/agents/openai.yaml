@@ -1,0 +1,7 @@
+interface:
+  display_name: "AirDesk Remote Computer Use (RCU)"
+  short_description: "AirDesk RCU with remote agent-desktop automation"
+  icon_small: "./assets/airdesk-symbol.svg"
+  icon_large: "./assets/airdesk-lockup.svg"
+  brand_color: "#176BFF"
+  default_prompt: "Use $remote-computer-use (RCU) for my authorized remote task: confirm the controller's MCP setting and the target's approved access, use only the target's integrated remote_desktop_* tools for screen/window/browser UI automation, apply the target OS's agent-desktop guide (Windows or macOS) on every connection, and keep desktop work in a visible interactive window."

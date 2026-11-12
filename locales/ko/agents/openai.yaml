@@ -1,0 +1,7 @@
+interface:
+  display_name: "AirDesk 원격 컴퓨터 사용 (RCU)"
+  short_description: "AirDesk RCU와 원격 agent-desktop 자동화"
+  icon_small: "./assets/airdesk-symbol.svg"
+  icon_large: "./assets/airdesk-lockup.svg"
+  brand_color: "#176BFF"
+  default_prompt: "허가된 원격 작업에 $remote-computer-use(RCU)를 사용하세요. 제어 PC의 MCP 설정과 대상 접근 승인을 확인하고, 화면/창/브라우저 UI 자동화에는 대상의 내장 remote_desktop_* 도구만 쓰고, 연결마다 대상 OS(Windows 또는 macOS)의 agent-desktop 가이드를 적용하고, 데스크톱 작업은 보이는 대화형 창에서 진행하세요."

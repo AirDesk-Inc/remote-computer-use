@@ -1,0 +1,7 @@
+interface:
+  display_name: "AirDesk リモートコンピューター操作 (RCU)"
+  short_description: "AirDesk RCU とリモート agent-desktop 自動化"
+  icon_small: "./assets/airdesk-symbol.svg"
+  icon_large: "./assets/airdesk-lockup.svg"
+  brand_color: "#176BFF"
+  default_prompt: "許可されたリモート作業に $remote-computer-use(RCU)を使ってください。コントローラーで AIによるリモートコンピューター操作(MCP)がオンであることを確認し、画面/ウィンドウ/ブラウザーの UI 自動化には対象の内蔵 remote_desktop_* ツールだけを使い、接続ごとに対象 OS(Windows または macOS)の agent-desktop ガイドを適用し、デスクトップ作業は表示中の対話型ウィンドウで行ってください。"
