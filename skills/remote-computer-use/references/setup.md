@@ -48,7 +48,7 @@ See [screen connection modes](screen-control.md#session-window).
 
 Ask your AI agent:
 
-> Install https://github.com/AirDesk-Inc/remote-coumputer-use.git.
+> Install https://github.com/AirDesk-Inc/remote-computer-use.git.
 > Register AirDesk's native MCP server and enable AI remote computer use on this computer.
 > Leave local Remote Terminal hosting unchanged.
 
@@ -57,7 +57,7 @@ provides the current one-line installer. To use the commands in this guide,
 clone the official GitHub repository and run them from its root.
 
 ```sh
-git clone https://github.com/AirDesk-Inc/remote-coumputer-use.git
+git clone https://github.com/AirDesk-Inc/remote-computer-use.git
 cd remote-coumputer-use
 npm ci --ignore-scripts
 node bin/cli.mjs install
@@ -197,7 +197,7 @@ is only conversational shorthand and the MCP tool names do not change.
 Clone the public repository to a location you control:
 
 ```sh
-git clone https://github.com/AirDesk-Inc/remote-coumputer-use.git
+git clone https://github.com/AirDesk-Inc/remote-computer-use.git
 ```
 
 The repository name intentionally matches that URL, including `coumputer`.
@@ -223,7 +223,7 @@ Installing a skill alone does not register or start the native MCP server.
 The [skills CLI](https://github.com/vercel-labs/skills) can copy just the skill:
 
 ```sh
-npx skills add AirDesk-Inc/remote-coumputer-use --skill remote-computer-use
+npx skills add AirDesk-Inc/remote-computer-use --skill remote-computer-use
 ```
 
 `--list` lists the repository's skills without installing. The default scope is
@@ -387,7 +387,7 @@ first (for example `claude mcp remove airdesk`) to switch a client to online.
   zip for Claude or ChatGPT skill upload. `--format plugin` writes a plugin
   archive that also declares the online MCP server.
 - Claude Code plugin marketplace: `/plugin marketplace add
-  AirDesk-Inc/remote-coumputer-use`, then install `remote-computer-use`,
+  AirDesk-Inc/remote-computer-use`, then install `remote-computer-use`,
   `remote-computer-use-ko` or `remote-computer-use-ja`. Plugins use online MCP.
 
 ## Troubleshooting

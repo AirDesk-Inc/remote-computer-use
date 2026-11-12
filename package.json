@@ -13,11 +13,11 @@
   "author": "AirDesk-Inc",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AirDesk-Inc/remote-coumputer-use.git"
+    "url": "git+https://github.com/AirDesk-Inc/remote-computer-use.git"
   },
-  "homepage": "https://github.com/AirDesk-Inc/remote-coumputer-use#readme",
+  "homepage": "https://github.com/AirDesk-Inc/remote-computer-use#readme",
   "bugs": {
-    "url": "https://github.com/AirDesk-Inc/remote-coumputer-use/issues"
+    "url": "https://github.com/AirDesk-Inc/remote-computer-use/issues"
   },
   "keywords": [
     "airdesk",

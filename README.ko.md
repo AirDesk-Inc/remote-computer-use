@@ -32,7 +32,7 @@ AirDesk의 네이티브 MCP 서버를 통해 허가된 원격 컴퓨터의 화�
 약관을 확인·동의한 뒤 ‘AI가 원격 컴퓨터 사용’을 켜세요.
 그다음 **제어 PC의 AI에게 이 GitHub 주소를 설치해 달라고 요청하세요.**
 
-> https://github.com/AirDesk-Inc/remote-coumputer-use.git 를 설치해줘.
+> https://github.com/AirDesk-Inc/remote-computer-use.git 를 설치해줘.
 > 이 PC의 AirDesk ‘AI가 원격 컴퓨터 사용’을 켜고 네이티브 MCP 서버도 등록해줘.
 > 제어 PC의 원격 터미널 허용은 변경하지 말아줘.
 
@@ -51,7 +51,7 @@ MCP 활성화는 설치 시 한 번만 수행하며 약관에 자동 동의하�
 아래 예제를 사용하려면 Node.js 22 이상에서 공식 GitHub 저장소를 받은 뒤 그 폴더에서 실행하세요.
 
 ```sh
-git clone https://github.com/AirDesk-Inc/remote-coumputer-use.git
+git clone https://github.com/AirDesk-Inc/remote-computer-use.git
 cd remote-coumputer-use
 npm ci --ignore-scripts
 node bin/cli.mjs install                                    # Codex (기본값)
@@ -80,7 +80,7 @@ Windows에 설치한 AirDesk 1.0.71 이상은 활성 Windows 콘솔 세션에 �
 | --- | --- |
 | Claude 웹·데스크톱·**모바일** | 설정 → 커넥터 → 맞춤 커넥터 추가 → `https://mcp.airdesk.co.kr/mcp`, AirDesk에서 승인. GitHub 저장소 폴더에서 `node bin/cli.mjs pack --lang ko`로 만든 스킬 zip을 업로드 |
 | ChatGPT | 개발자 모드 → 같은 URL과 OAuth로 맞춤 MCP 서버 추가 |
-| Claude Code 플러그인 | `/plugin marketplace add AirDesk-Inc/remote-coumputer-use` 후 `remote-computer-use`, `remote-computer-use-ko`, `remote-computer-use-ja` 중 설치 |
+| Claude Code 플러그인 | `/plugin marketplace add AirDesk-Inc/remote-computer-use` 후 `remote-computer-use`, `remote-computer-use-ko`, `remote-computer-use-ja` 중 설치 |
 | 코딩 에이전트 | `install --mode online --client <id>`(`codex`, `claude-code`, `cursor`, `vscode`, `gemini-cli`, `opencode`, `generic`). OAuth 대신 `AIRDESK_MCP_KEY`의 API 키를 쓰려면 `--auth key` 추가 |
 
 AirDesk에 로그인한 뒤 권한 범위(`observe`, `input`, `terminal`), 만료, 허용할 컴퓨터와
@@ -144,7 +144,7 @@ MCP를 공개 네트워크에 노출하지 마세요.
 [skills CLI](https://github.com/vercel-labs/skills)로 스킬 파일만 설치할 수 있습니다.
 
 ```sh
-npx skills add AirDesk-Inc/remote-coumputer-use --skill remote-computer-use
+npx skills add AirDesk-Inc/remote-computer-use --skill remote-computer-use
 ```
 
 `--list`를 붙이면 설치 없이 스킬 목록만 확인합니다. 기본값은 현재 프로젝트 범위이며,

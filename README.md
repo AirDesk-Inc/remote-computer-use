@@ -41,7 +41,7 @@ Install [AirDesk](https://airdesk.co.kr) on both computers. On the controller, e
 app. Older builds call this setting **MCP server** or **MCP mode**. Then ask your
 AI agent to install this GitHub repository on the controller:
 
-> Install https://github.com/AirDesk-Inc/remote-coumputer-use.git.
+> Install https://github.com/AirDesk-Inc/remote-computer-use.git.
 > Enable this computer's AirDesk AI remote computer use and register its native MCP server.
 > Leave this computer's Remote Terminal hosting setting unchanged.
 
@@ -63,7 +63,7 @@ current one-line installer. For the examples below, clone the official GitHub
 repository and run them from its root with Node.js 22 or later.
 
 ```sh
-git clone https://github.com/AirDesk-Inc/remote-coumputer-use.git
+git clone https://github.com/AirDesk-Inc/remote-computer-use.git
 cd remote-coumputer-use
 npm ci --ignore-scripts
 node bin/cli.mjs install                                    # Codex (default)
@@ -94,7 +94,7 @@ Online clients connect directly to the gateway, including on web and mobile.
 | --- | --- |
 | Claude web, desktop and **mobile** | Settings → Connectors → Add custom connector → `https://mcp.airdesk.co.kr/mcp`, approve in AirDesk. Upload the skill from `node bin/cli.mjs pack --lang ko` run in the checkout. |
 | ChatGPT | Developer mode → add a custom MCP server with the same URL and OAuth. |
-| Claude Code plugin | `/plugin marketplace add AirDesk-Inc/remote-coumputer-use`, then install `remote-computer-use`, `remote-computer-use-ko` or `remote-computer-use-ja`. |
+| Claude Code plugin | `/plugin marketplace add AirDesk-Inc/remote-computer-use`, then install `remote-computer-use`, `remote-computer-use-ko` or `remote-computer-use-ja`. |
 | Coding agents | `install --mode online --client <id>` (`codex`, `claude-code`, `cursor`, `vscode`, `gemini-cli`, `opencode`, `generic`). Add `--auth key` to read an API key from `AIRDESK_MCP_KEY` instead of OAuth. |
 
 After signing in to AirDesk, choose scopes (`observe`, `input`, `terminal`),
@@ -163,7 +163,7 @@ The [skills CLI](https://github.com/vercel-labs/skills) can install just the
 skill files:
 
 ```sh
-npx skills add AirDesk-Inc/remote-coumputer-use --skill remote-computer-use
+npx skills add AirDesk-Inc/remote-computer-use --skill remote-computer-use
 ```
 
 Add `--list` to list the repository's skills without installing. By default the
