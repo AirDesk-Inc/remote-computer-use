@@ -4,7 +4,7 @@ description: Install or explicitly upgrade AirDesk remote-computer-use, or opera
 license: MIT for original skill content and scripts; material adapted from vercel-labs/agent-desktop is under Apache-2.0 (see THIRD_PARTY_NOTICES.md); AirDesk logos and trademarks excluded (see assets/NOTICE.md).
 metadata:
   author: AirDesk-Inc
-  version: "0.4.12"
+  version: "0.4.13"
 ---
 
 # AirDesk Remote Computer Use
@@ -177,6 +177,11 @@ interacts; resume only after handback and a fresh observation. Native MCP/agent
 ownership (`agentControlMode`), session IDs and cleanup remain in force.
 If a tool reports that the local user is controlling the window, pause and wait
 for handback. Do not retry in a loop or bypass the input guard with another tool.
+`INPUT_IN_USE` with "A remote keyboard or pointer is active" means the host
+still records a key or button as held, possibly left over from earlier manual
+input. Its message names what is held. Ask the user to release keys and buttons
+in the remote window and try once more. If it persists while nobody is using
+the window, ask before reconnecting: a fresh `remote_connect` clears that state.
 The window's automatic clipboard capture/sync stays disabled for MCP ownership. Opening
 the window does not enable audio; microphone, overlay and recording settings are
 unchanged. Do not promise automatic clipboard or audio. An explicit clipboard

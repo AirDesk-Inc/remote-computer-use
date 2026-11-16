@@ -1,7 +1,7 @@
 {
   "name": "remote-computer-use",
   "displayName": "AirDesk Remote Computer Use",
-  "version": "0.4.12",
+  "version": "0.4.13",
   "description": "AirDesk remote computer use (RCU): operate an authorized remote Windows/macOS computer through AirDesk online MCP, with the target OS agent-desktop guide applied on every connection.",
   "author": {
     "name": "AirDesk-Inc",

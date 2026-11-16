@@ -1,7 +1,7 @@
 {
   "name": "remote-computer-use-ja",
   "displayName": "AirDesk リモートコンピューター操作",
-  "version": "0.4.12",
+  "version": "0.4.13",
   "description": "AirDesk リモートコンピューター操作(RCU): AirDesk オンライン MCP で許可されたリモート Windows/macOS コンピューターを操作し、接続ごとに対象 OS の agent-desktop ガイドを適用します。",
   "author": {
     "name": "AirDesk-Inc",

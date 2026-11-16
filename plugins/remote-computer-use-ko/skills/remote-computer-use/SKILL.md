@@ -4,7 +4,7 @@ description: AirDesk remote-computer-use를 설치하거나 명시적으로 업�
 license: MIT for original skill content and scripts; material adapted from vercel-labs/agent-desktop is under Apache-2.0 (see THIRD_PARTY_NOTICES.md); AirDesk logos and trademarks excluded (see assets/NOTICE.md).
 metadata:
   author: AirDesk-Inc
-  version: "0.4.12"
+  version: "0.4.13"
   language: ko
 ---
 
@@ -132,7 +132,11 @@ AirDesk 원격 컴퓨터 요청에서 `rcu`와 `RCU`는 이 스킬을 가리키�
 동안 AI 입력을 멈추고, 제어를 돌려받고 새로 관찰한 뒤에만 재개하세요. 네이티브 MCP/에이전트
 소유권(`agentControlMode`), 세션 ID, 정리 규칙은 계속 적용됩니다. 도구가 로컬 사용자가 창을
 제어 중이라고 알리면 멈추고 제어가 돌아올 때까지 기다리세요. 반복 재시도하거나 다른 도구로 입력
-보호를 우회하지 마세요. MCP가 소유한 동안 창의 자동 클립보드 캡처/동기화는 꺼져 있습니다. 창을
+보호를 우회하지 마세요.
+`INPUT_IN_USE`("A remote keyboard or pointer is active")는 호스트가 아직 눌린 키나 버튼을 기록하고
+있다는 뜻이며, 앞선 수동 입력이 남긴 상태일 수 있습니다. 메시지에 눌린 항목이 표시됩니다. 사용자에게
+원격 창에서 키와 버튼을 떼 달라고 요청한 뒤 한 번만 다시 시도하세요. 아무도 창을 쓰지 않는데도
+계속되면 다시 연결해도 되는지 물어보세요. 새 `remote_connect`가 그 상태를 지웁니다. MCP가 소유한 동안 창의 자동 클립보드 캡처/동기화는 꺼져 있습니다. 창을
 열어도 오디오는 켜지지 않으며 마이크, 오버레이, 녹화 설정은 그대로입니다. 자동 클립보드나
 오디오를 약속하지 마세요. 명시적 클립보드 도구(예: 제공되는 `remote_desktop_clipboard_*`)는
 작업 허가와 실제 스키마가 필요한 별도 작업이며, 창의 자동 동기화와 무관하고 그것을 켜지도

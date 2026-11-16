@@ -4,7 +4,7 @@ description: AirDesk remote-computer-use をインストールまたは明示的
 license: MIT for original skill content and scripts; material adapted from vercel-labs/agent-desktop is under Apache-2.0 (see THIRD_PARTY_NOTICES.md); AirDesk logos and trademarks excluded (see assets/NOTICE.md).
 metadata:
   author: AirDesk-Inc
-  version: "0.4.12"
+  version: "0.4.13"
   language: ja
 ---
 
@@ -140,7 +140,12 @@ AirDesk のリモートコンピューターの依頼では、`rcu` と `RCU` �
 改めて観察してから再開してください。ネイティブ MCP/エージェントの所有権(`agentControlMode`)、
 セッション ID、後片付けの規則は引き続き有効です。ツールがローカルのユーザーがウィンドウを操作中だと
 伝えたら、停止して制御が戻るまで待ってください。ループで再試行したり、別のツールで入力の保護を
-回避したりしないでください。MCP が所有している間、ウィンドウの自動クリップボードのキャプチャ/
+回避したりしないでください。
+`INPUT_IN_USE`("A remote keyboard or pointer is active")は、ホストがまだ押されたキーやボタンを
+記録していることを示し、以前の手動入力が残した状態の場合があります。メッセージに押されたままの項目が
+示されます。リモートウィンドウでキーとボタンを離すようユーザーに頼み、1 回だけ再試行してください。
+誰もウィンドウを使っていないのに続く場合は、再接続してよいか確認してください。新しい `remote_connect`
+でその状態は消えます。MCP が所有している間、ウィンドウの自動クリップボードのキャプチャ/
 同期は無効のままです。ウィンドウを開いてもオーディオはオンにならず、マイク、オーバーレイ、録画の
 設定は変わりません。自動のクリップボードやオーディオを約束しないでください。明示的なクリップボード
 ツール(提供されている `remote_desktop_clipboard_*` など)は、作業の許可と実際のスキーマが必要な

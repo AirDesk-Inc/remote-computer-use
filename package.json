@@ -1,6 +1,6 @@
 {
   "name": "@airdesk/remote-computer-use",
-  "version": "0.4.12",
+  "version": "0.4.13",
   "description": "Install the AirDesk remote computer use skill in English, Korean or Japanese and configure native or online AirDesk MCP.",
   "type": "module",
   "bin": {

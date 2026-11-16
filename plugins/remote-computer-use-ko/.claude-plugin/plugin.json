@@ -1,7 +1,7 @@
 {
   "name": "remote-computer-use-ko",
   "displayName": "AirDesk 원격 컴퓨터 사용",
-  "version": "0.4.12",
+  "version": "0.4.13",
   "description": "AirDesk 원격 컴퓨터 사용(RCU): AirDesk 온라인 MCP로 허가된 원격 Windows/macOS 컴퓨터를 조작하고, 연결마다 대상 OS의 agent-desktop 가이드를 적용합니다.",
   "author": {
     "name": "AirDesk-Inc",
