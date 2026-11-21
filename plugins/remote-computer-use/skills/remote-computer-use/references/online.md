@@ -82,9 +82,7 @@ actual desktop. It opens no controller window or video stream. Shared and team
 hosts and `terminal_*` calls are unavailable in direct mode. Use the live
 schema and the target's response to check each tool. Supported targets keep
 held-key and button down/up as standalone calls owned by the session and check
-each step of a direct batch individually. On supported Windows builds, direct
-launch accepts the installed system apps `notepad`, `calc` and `mspaint` with
-no launch arguments. A host tool block still applies.
+each step of a direct batch individually.
 
 An unavailable target or grant can produce `BRIDGE_OFFLINE` even for a direct
 call. Check the target's AirDesk service, signed-in desktop and direct discovery.
@@ -92,6 +90,20 @@ For `MCP_SESSION_NOT_OWNED`, use the opening credential and the current session
 ID. A timeout or `OUTCOME_UNKNOWN` requires a fresh observation before retry;
 if the session was retired, obtain authorization before reconnecting. Ask the
 user before switching an explicitly requested direct task to bridge mode.
+
+### Direct App Launch
+
+Use standalone `remote_desktop_launch` with `input` scope when the target
+supports it. Supply an installed app name the target can resolve. macOS also
+accepts a bundle ID. Omit paths, launch arguments, working directories, and
+environment variables.
+
+On supported hosts, the owner sets **Launch allowlist** and **Launch blocklist**
+under **Direct MCP app launch**. Enter real process names separated by commas
+or semicolons. macOS also accepts bundle IDs in those lists. Leave the allowlist
+empty (no `*`) to permit every installed app AirDesk can resolve. A matching
+blocklist entry always takes priority. The target checks the resolved app
+identity and applies any block on the launch tool.
 
 ## Scopes
 

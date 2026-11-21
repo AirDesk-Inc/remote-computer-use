@@ -71,6 +71,7 @@ node bin/cli.mjs install --mode online --client claude-code
 
 도구 목록에 `direct_host`가 표시되면 기존 홈페이지 API 키 또는 OAuth로 본인 계정의 대상 PC에
 직접 연결할 수 있습니다. [직접 모드 연결 절차](locales/ko/references/online.md#직접-모드-연결)를 참고하세요.
+앱 실행에는 대상의 [직접 모드 앱 실행 정책](locales/ko/references/online.md#직접-모드-앱-실행)이 적용됩니다.
 
 브리지 모드는 AirDesk 1.0.66 이상이 있는 **브리지 PC**에서 호출을 실행합니다. 브리지 PC에서
 AirDesk에 로그인하고 현재 AI 추가약관에 동의한 뒤 ‘AI가 원격 컴퓨터 사용’과 ‘온라인 MCP’를 켜세요.

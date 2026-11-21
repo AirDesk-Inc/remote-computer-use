@@ -71,9 +71,12 @@ All tool names above carry the `remote_desktop_` prefix and the `sessionId` argu
 
 ## Launch and App Identity
 
-- `launch` takes an absolute path or a bare executable name under System32 or the
-  Windows directory (`notepad`, `calc.exe`), not a display name. Other apps need
-  the absolute path; use `list_apps`/`list_windows` to find what already runs.
+- In direct mode, use an installed app name that the host recognizes, such as
+  a registered Start menu app or a supported system GUI executable name.
+  Follow the target's direct app launch policy. [Online MCP guide](online.md)
+- In native mode, `launch` accepts an absolute path or a bare executable name
+  under System32 or the Windows directory (`notepad`, `calc.exe`). Use
+  `list_apps` or `list_windows` to find apps that already run.
 - If several instances already run, `launch` returns `AMBIGUOUS_TARGET` and
   `no_attach` fails with "Application is already running". For a browser that is
   already open, use its existing window (new tab with `press ctrl+t`) instead of

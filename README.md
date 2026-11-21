@@ -85,6 +85,7 @@ in every language. Switching an installed copy to another language needs
 Online MCP supports an account-owned target in **direct mode** (`direct_host`)
 when the tool catalog advertises it. Use the existing account API key or OAuth
 grant and follow [direct discovery and connection](skills/remote-computer-use/references/online.md#direct-host-without-a-bridge).
+App launches follow the target's [direct app launch policy](skills/remote-computer-use/references/online.md#direct-app-launch).
 
 Bridge mode runs calls on your **bridge PC** with AirDesk 1.0.66 or later. Sign in,
 accept the current AI terms and turn on AI remote computer use and online MCP

@@ -57,6 +57,7 @@ observations, not upstream claims.
 - **Identity.** `launch` accepts a display name (`"TextEdit"`, `"System
   Settings"`) or a bundle ID. Other tools take the display name through `app`.
   `window_id` values such as `w-4521` stay valid for the life of the window.
+  For direct mode, follow the target's launch policy. [Online MCP guide](online.md)
 - **Native-address refs.** A ref returns to the exact element it was captured
   from, so identical twins each keep their own ref. A removed element is
   `STALE_REF` (`retained_object_stale`) and never falls back to a look-alike.
