@@ -47,7 +47,7 @@ class PackageTests(unittest.TestCase):
             self.assertIn(f'version: "{version}"', text)
             self.assertIn(f"language: {lang}", text)
             # Tool names, codes and the online endpoint are never translated.
-            for token in ("remote_connect", "remote_status", "remote_desktop_skills_get", "WINDOW_REQUIRED",
+            for token in ("remote_connect", "remote_status", "remote_desktop_skills_get", "direct_host",
                           "https://mcp.airdesk.co.kr/mcp", "references/online.md"):
                 self.assertIn(token, text)
             online = (overlay / "references/online.md").read_text(encoding="utf-8")
@@ -62,7 +62,7 @@ class PackageTests(unittest.TestCase):
         self.assertIn("AI remote computer use (MCP) is ON", " ".join(text.split()))
         self.assertIn("controller's incoming shell setting and can remain off", " ".join(text.split()))
         self.assertIn("Confirm target access approval before `remote_connect`", " ".join(text.split()))
-        self.assertIn("For local and bridge mode, the target's MCP switch governs its own use as a controller.", " ".join(text.split()))
+        self.assertIn("For local mode, the target's MCP switch governs its own use as a controller.", " ".join(text.split()))
         self.assertIn("both MCP settings on that target", text)
         self.assertIn("the target account's current AI terms", text)
         self.assertIn("target_ai_remote_access_terms_required", text)

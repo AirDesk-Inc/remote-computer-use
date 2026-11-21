@@ -1168,6 +1168,81 @@
         "references/online.md": "6459609d42e979f4219408567a5f57957785f8607ed25962d533c36822887893",
         "scripts/airdesk_mcp.py": "af8039dd9dec8358e680969ab21a78dc8c2bdabcebf7f3716519541bafa0b49c"
       }
+    },
+    {
+      "version": "0.4.13",
+      "source": "npm",
+      "files": {
+        "SKILL.md": "7241f3847ce78e5cde3901c17a0eb8cd2b53007f7031a7e0dcefe07b4d5cf53c",
+        "LICENSE.txt": "0374cd3ee0c0c797646f2f2fed51af5be12b332b38218ce84c6384b3e297e2ac",
+        "THIRD_PARTY_NOTICES.md": "5e49c1041da47dc4ed9a44bceab5ec5da2a16ff37f519e77fa2f15e4151c8609",
+        "licenses/agent-desktop-LICENSE.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "agents/openai.yaml": "5c0635398ecc3639b64dd188a661d3ad57b71aad825847a95e25abfd4cb5b569",
+        "assets/NOTICE.md": "3194beeb43db21eb8fe63f512724015acefc2953e3d3818a69c365df36da6298",
+        "assets/airdesk-symbol.svg": "268ba519d5d247574019366ba3ead4c47bf6806fe532ba60fddaaf730ebfa242",
+        "assets/airdesk-lockup.svg": "2190f912c1e7666cbaa69c824dbf01905c373f3acee564c81ebaf76f378fe66d",
+        "references/setup.md": "ecc4a9facdd84d634c66b8b010c512606679cc5c40c00386a02331975e70fab3",
+        "references/screen-control.md": "ed89fe7d4322dee3e8aaf6ff4ac4bf0096819c5abfeb2f29240635b3dabc6599",
+        "references/terminal.md": "8b8dcf5356a909702398fe63956d0f03e43b16821fb1d1df0da6d720573e25fd",
+        "references/windows-automation.md": "c13e2e49a33e804950739859a8dfa46450ac3a773c53a1213680cf6ccc9c5dd0",
+        "references/browser-control.md": "96be81f1635caba1a2bc2abac11034740a90877be3dcc2ef558c21e8fb035696",
+        "references/agent-desktop.md": "c2d4816b79d2b6eda474344ed60eecc44784cd45c966145d6a80835153ab8f0f",
+        "references/platform-windows.md": "5aeeaffdfbee4b2fccdab258aae3447d3d6068977d29283e263fa0b47669676b",
+        "references/platform-macos.md": "64a02a6be3e3adfde452b31163db68b9fb898224a9cbfee6265a9b86c060edd7",
+        "references/online.md": "648288237948f3e4a5f8c6a4a20de8d163a8c105898d170a9c2a94a69e0b3c32",
+        "scripts/airdesk_mcp.py": "af8039dd9dec8358e680969ab21a78dc8c2bdabcebf7f3716519541bafa0b49c"
+      },
+      "integrity": "sha512-TOvkLpIdKTGra0Z+rcZUG933vn15zqiBMgEPHIORoDQDkLo/nIDrPw26Vg6vWhDj3oyKxo6j2sgZ9ricuL3GLQ=="
+    },
+    {
+      "version": "0.4.13-ko",
+      "source": "npm",
+      "files": {
+        "SKILL.md": "f2225b97d54b59f8c4ffda41ae66dd5be17fbdfc1570c14664d4ec0d9802afb9",
+        "LICENSE.txt": "0374cd3ee0c0c797646f2f2fed51af5be12b332b38218ce84c6384b3e297e2ac",
+        "THIRD_PARTY_NOTICES.md": "5e49c1041da47dc4ed9a44bceab5ec5da2a16ff37f519e77fa2f15e4151c8609",
+        "licenses/agent-desktop-LICENSE.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "agents/openai.yaml": "5a21eedc82aafd51bb55992a39ced3121d65baad33c91f925adba01b52dd48e1",
+        "assets/NOTICE.md": "3194beeb43db21eb8fe63f512724015acefc2953e3d3818a69c365df36da6298",
+        "assets/airdesk-symbol.svg": "268ba519d5d247574019366ba3ead4c47bf6806fe532ba60fddaaf730ebfa242",
+        "assets/airdesk-lockup.svg": "2190f912c1e7666cbaa69c824dbf01905c373f3acee564c81ebaf76f378fe66d",
+        "references/setup.md": "ecc4a9facdd84d634c66b8b010c512606679cc5c40c00386a02331975e70fab3",
+        "references/screen-control.md": "ed89fe7d4322dee3e8aaf6ff4ac4bf0096819c5abfeb2f29240635b3dabc6599",
+        "references/terminal.md": "8b8dcf5356a909702398fe63956d0f03e43b16821fb1d1df0da6d720573e25fd",
+        "references/windows-automation.md": "c13e2e49a33e804950739859a8dfa46450ac3a773c53a1213680cf6ccc9c5dd0",
+        "references/browser-control.md": "96be81f1635caba1a2bc2abac11034740a90877be3dcc2ef558c21e8fb035696",
+        "references/agent-desktop.md": "c2d4816b79d2b6eda474344ed60eecc44784cd45c966145d6a80835153ab8f0f",
+        "references/platform-windows.md": "5aeeaffdfbee4b2fccdab258aae3447d3d6068977d29283e263fa0b47669676b",
+        "references/platform-macos.md": "64a02a6be3e3adfde452b31163db68b9fb898224a9cbfee6265a9b86c060edd7",
+        "references/online.md": "c5faa45932b94e314988dbb597717893271ca4b28e32f5f129097c6cc5eb5e47",
+        "scripts/airdesk_mcp.py": "af8039dd9dec8358e680969ab21a78dc8c2bdabcebf7f3716519541bafa0b49c"
+      },
+      "integrity": "sha512-TOvkLpIdKTGra0Z+rcZUG933vn15zqiBMgEPHIORoDQDkLo/nIDrPw26Vg6vWhDj3oyKxo6j2sgZ9ricuL3GLQ=="
+    },
+    {
+      "version": "0.4.13-ja",
+      "source": "npm",
+      "files": {
+        "SKILL.md": "e016d8620603cd6f65508f4e3d02122ec2afe6956ff464cf11e5257c7235e298",
+        "LICENSE.txt": "0374cd3ee0c0c797646f2f2fed51af5be12b332b38218ce84c6384b3e297e2ac",
+        "THIRD_PARTY_NOTICES.md": "5e49c1041da47dc4ed9a44bceab5ec5da2a16ff37f519e77fa2f15e4151c8609",
+        "licenses/agent-desktop-LICENSE.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "agents/openai.yaml": "1b8e1863e04ddf7a7c40d93250ee36192981af4f188d77fd33b9f074639929ca",
+        "assets/NOTICE.md": "3194beeb43db21eb8fe63f512724015acefc2953e3d3818a69c365df36da6298",
+        "assets/airdesk-symbol.svg": "268ba519d5d247574019366ba3ead4c47bf6806fe532ba60fddaaf730ebfa242",
+        "assets/airdesk-lockup.svg": "2190f912c1e7666cbaa69c824dbf01905c373f3acee564c81ebaf76f378fe66d",
+        "references/setup.md": "ecc4a9facdd84d634c66b8b010c512606679cc5c40c00386a02331975e70fab3",
+        "references/screen-control.md": "ed89fe7d4322dee3e8aaf6ff4ac4bf0096819c5abfeb2f29240635b3dabc6599",
+        "references/terminal.md": "8b8dcf5356a909702398fe63956d0f03e43b16821fb1d1df0da6d720573e25fd",
+        "references/windows-automation.md": "c13e2e49a33e804950739859a8dfa46450ac3a773c53a1213680cf6ccc9c5dd0",
+        "references/browser-control.md": "96be81f1635caba1a2bc2abac11034740a90877be3dcc2ef558c21e8fb035696",
+        "references/agent-desktop.md": "c2d4816b79d2b6eda474344ed60eecc44784cd45c966145d6a80835153ab8f0f",
+        "references/platform-windows.md": "5aeeaffdfbee4b2fccdab258aae3447d3d6068977d29283e263fa0b47669676b",
+        "references/platform-macos.md": "64a02a6be3e3adfde452b31163db68b9fb898224a9cbfee6265a9b86c060edd7",
+        "references/online.md": "6459609d42e979f4219408567a5f57957785f8607ed25962d533c36822887893",
+        "scripts/airdesk_mcp.py": "af8039dd9dec8358e680969ab21a78dc8c2bdabcebf7f3716519541bafa0b49c"
+      },
+      "integrity": "sha512-TOvkLpIdKTGra0Z+rcZUG933vn15zqiBMgEPHIORoDQDkLo/nIDrPw26Vg6vWhDj3oyKxo6j2sgZ9ricuL3GLQ=="
     }
   ]
 }

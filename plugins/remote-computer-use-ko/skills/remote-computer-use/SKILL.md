@@ -4,7 +4,7 @@ description: AirDesk remote-computer-use를 설치하거나 명시적으로 업�
 license: MIT for original skill content and scripts; material adapted from vercel-labs/agent-desktop is under Apache-2.0 (see THIRD_PARTY_NOTICES.md); AirDesk logos and trademarks excluded (see assets/NOTICE.md).
 metadata:
   author: AirDesk-Inc
-  version: "0.4.13"
+  version: "0.4.14"
   language: ko
 ---
 
@@ -15,7 +15,7 @@ metadata:
 Python 3.10 이상은 로컬 진단에만 쓰이며 필수가 아닙니다.
 
 AirDesk의 MCP 설정 이름은 **AI가 원격 컴퓨터 사용**(영어 **AI remote computer use**)입니다.
-이전 빌드에서는 **MCP 서버** 또는 **MCP 모드**라고 표시될 수 있습니다. 로컬·브리지 모드에서는
+이전 빌드에서는 **MCP 서버** 또는 **MCP 모드**라고 표시될 수 있습니다. 로컬 모드에서는
 컨트롤러에서, 직접 모드에서는 대상 컴퓨터에서 이 설정을 켜세요.
 UI 작업에는 내장된
 [agent-desktop](https://github.com/vercel-labs/agent-desktop) 도구를 사용합니다.
@@ -43,9 +43,9 @@ AirDesk 원격 컴퓨터 요청에서 `rcu`와 `RCU`는 이 스킬을 가리키�
   `local_*` 도구가 있고, 이 컴퓨터가 컨트롤러입니다.
 - **온라인 모드:** 클라이언트가 `https://mcp.airdesk.co.kr/mcp`에 접속합니다. 예를 들어
   휴대폰의 Claude나 ChatGPT가 이 방식을 씁니다. 도구 목록에 `local_*` 도구가 없습니다.
-  기본 **브리지 모드**에서는 계정의 브리지 PC가 컨트롤러입니다. **직접 모드**(`direct_host`)에서는
+  기본 **직접 모드**(`direct_host`)에서는
   게이트웨이가 허가된 대상 컴퓨터에 도구를 전달합니다. 별도 브리지 없이 연결하려면 첫 호출 전에
-  [직접 모드 연결](references/online.md#직접-모드-연결)을 따르세요. 로그인, 브리지 사전 확인,
+  [직접 모드 연결](references/online.md#직접-모드-연결)을 따르세요. 로그인,
   권한 범위와 오류 처리는 [online.md](references/online.md)를 참고하세요.
 
 각 모드는 같은 대상 OS 가이드와 세션 정리 규칙을 적용합니다. 현재 도구 목록과 선택한 모드의
@@ -55,17 +55,17 @@ AirDesk 원격 컴퓨터 요청에서 `rcu`와 `RCU`는 이 스킬을 가리키�
 
 연결, 화면 캡처, 입력 전송, 터미널 열기 전에 사용자가 해당 대상과 작업을 승인했는지 확인하세요.
 
-1. **컨트롤러(로컬·브리지 모드)** AirDesk에 로그인하고 앱에서 현재 AI 약관에 동의한 뒤 **AI가 원격 컴퓨터 사용(MCP)**을 켭니다. 브리지 PC에서는 **온라인 MCP**도 켭니다.
+1. **컨트롤러(로컬 모드)** AirDesk에 로그인하고 앱에서 현재 AI 약관에 동의한 뒤 **AI가 원격 컴퓨터 사용(MCP)**을 켭니다.
 2. **대상** AirDesk가 실행 중이고 소유자가 호스팅과 접근을 승인해야 합니다. 데스크톱·브라우저 조작에는 대상 계정의 현재 AI 약관 동의와 입력 권한이 필요합니다. macOS 접근성 조작에는 OS 손쉬운 사용 권한이 필요합니다. 직접 모드는 대상의 활성 사용자 세션, **AI가 원격 컴퓨터 사용(MCP)** 및 **온라인 MCP**도 요구합니다.
-3. **셸 작업(로컬·브리지 모드)** 대상이 원격 터미널 호스팅을 지원하고, 원격 터미널 설정이 켜져 있으며 소유자가 앱에서 현재 약관에 동의해야 합니다.
+3. **셸 작업(로컬 모드)** 대상이 원격 터미널 호스팅을 지원하고, 원격 터미널 설정이 켜져 있으며 소유자가 앱에서 현재 약관에 동의해야 합니다.
 
 `target_ai_remote_access_terms_required`이면 대상 소유자가 해당 컴퓨터에서 현재 약관을 검토하고 동의합니다. `target_ai_remote_access_policy_unavailable`이면 대상의 AirDesk 로그인 상태를 확인한 뒤 다시 시도하세요.
 
-로컬·브리지 모드는 탐색 전에 `remote_status`를 읽으세요. `mcpEnabled`, `mcpServerEnabled`, `credentialAvailable`, `termsAccepted`가 모두 true이고, `termsRequired`가 false이며 `blockedReason`이 비어 있어야 합니다. 약관 필드가 없으면 미확인입니다. `remoteTerminalEnabled`는 컨트롤러의 들어오는 셸 설정이며 꺼져 있어도 됩니다. `ai_remote_access_terms_required`이면 컨트롤러 사용자에게 AirDesk 로그인과 현재 약관 동의를 요청하세요. `policy_unavailable`이면 설정 접근을 복구한 뒤 다시 시도하세요. 직접 모드에서는 연결 후 `remote_status`에 반환된 `sessionId`를 넘기세요.
+로컬 모드는 탐색 전에 `remote_status`를 읽으세요. `mcpEnabled`, `mcpServerEnabled`, `credentialAvailable`, `termsAccepted`가 모두 true이고, `termsRequired`가 false이며 `blockedReason`이 비어 있어야 합니다. 약관 필드가 없으면 미확인입니다. `remoteTerminalEnabled`는 컨트롤러의 들어오는 셸 설정이며 꺼져 있어도 됩니다. `ai_remote_access_terms_required`이면 컨트롤러 사용자에게 AirDesk 로그인과 현재 약관 동의를 요청하세요. `policy_unavailable`이면 설정 접근을 복구한 뒤 다시 시도하세요. 직접 모드에서는 연결 후 `remote_status`에 반환된 `sessionId`를 넘기세요.
 
 `remote_list_computers`에서 승인된 대상을 확인하세요. 셸 작업에는 대상의 `targetRemoteTerminal`에서 `supported`, `enabled`, `termsAccepted`, `termsVersion`을 읽으세요. false는 지원하지 않거나 설정이 꺼져 있거나 약관 동의가 없다는 뜻입니다. 필드 누락과 null은 미확인입니다. 호환 필드인 `terminalAdvertised`와 `terminalSupported`는 구버전에서도 false일 수 있습니다. 확인된 누락 조건만 소유자에게 요청하세요. 호스트 전체의 `connected`는 컴퓨터 목록을 새로 읽어 확인하고, 현재 MCP 세션이 연 셸은 `remote_status`의 `sessionConnected`로 확인하세요. 터미널 접근은 호스트가 최종 승인합니다.
 
-로컬·브리지 모드에서 컨트롤러에 AirDesk가 없거나 MCP가 꺼져 있으면 [설정 절차](references/setup.md)를 안내하세요. 명시적으로 설치를 요청받은 경우 네이티브 MCP를 등록하고 AirDesk의 일회성 설정 명령으로 컨트롤러 MCP를 켤 수 있습니다.
+로컬 모드에서 컨트롤러에 AirDesk가 없거나 MCP가 꺼져 있으면 [설정 절차](references/setup.md)를 안내하세요. 명시적으로 설치를 요청받은 경우 네이티브 MCP를 등록하고 AirDesk의 일회성 설정 명령으로 컨트롤러 MCP를 켤 수 있습니다.
 
 사용자는 먼저 앱에서 현재 AI 원격 접근 약관을 검토해야
 하며, 설치 프로그램은 약관에 동의할 수 없습니다. `install --upgrade`는 설치 프로그램이 인식하는
@@ -83,7 +83,7 @@ AirDesk 원격 컴퓨터 요청에서 `rcu`와 `RCU`는 이 스킬을 가리키�
 1. AirDesk 서버의 도구를 탐색하고, 현재 스키마를 기준으로 삼으세요. 클라이언트별 도구 접두사를
    가정하거나 다른 MCP 서버로 몰래 대체하지 마세요. 예상 도구 이름은 참조 문서에 있습니다.
 2. **직접 모드**의 조회, 연결, 상태 확인은 [직접 모드 연결](references/online.md#직접-모드-연결)을
-   따르세요. 첫 조작 전에 아래 대상 OS 가이드도 적용하세요. 나머지 연결 단계는 로컬·브리지 모드에
+   따르세요. 첫 조작 전에 아래 대상 OS 가이드도 적용하세요. 나머지 연결 단계는 로컬 모드에
    적용됩니다.
 3. 컨트롤러 사전 확인 후 `remote_list_computers`로 허가된 대상을 찾으세요. 선택 인자
    `remoteId`에는 사용자가 알려준 정확한 9자리 ID만 넣습니다. ID를 추측하거나 이름이 모호한
@@ -93,7 +93,7 @@ AirDesk 원격 컴퓨터 요청에서 `rcu`와 `RCU`는 이 스킬을 가리키�
    창이 아니라, 기존 호스트 입력 권한 범위 안에서 로컬 마우스/키보드 전달과 일반 툴바가 있는
    실제 대화형 원격 창을 컨트롤러에 엽니다. `showWindow:false`나 `video:false`는 사용자가
    헤드리스 또는 영상 없는 작업을 명시적으로 요청했을 때만 쓰세요. `video:false`는 창도
-   끕니다. 온라인 브리지 모드에서 `false`를 보내면 `WINDOW_REQUIRED`가 반환됩니다.
+   끕니다. .
    먼저 현재 스키마를 확인하세요. `showWindow`가 없거나 네이티브 빌드가 관찰 전용 창만
    제공하면 데스크톱 입력을 멈추고 호환되는 앱 업데이트를 요청하세요. 옵션을 몰래 빼거나
    헤드리스로 대체하지 마세요. 반환된 `sessionId`를 보관하고 절대 지어내지 마세요. 네이티브 MCP
@@ -122,7 +122,7 @@ AirDesk 원격 컴퓨터 요청에서 `rcu`와 `RCU`는 이 스킬을 가리키�
    - Windows → [platform-windows.md](references/platform-windows.md)
    - macOS → [platform-macos.md](references/platform-macos.md)
    - 그 외 또는 알 수 없음 → AirDesk로는 agent-desktop UI 자동화를 쓸 수 없습니다. 이를
-     설명하고 UI 작업을 멈추세요. 로컬·브리지 모드에서는 터미널 지원을 별도로 확인할 수 있습니다.
+     설명하고 UI 작업을 멈추세요. 로컬 모드에서는 터미널 지원을 별도로 확인할 수 있습니다.
 3. **핵심 가이드 불러오기:** CLI-MCP 변환과 disposition 규칙을 포함한
    [agent-desktop.md](references/agent-desktop.md).
 4. **대상에서 확인:** `remote_desktop_skills_get`을 `name: "desktop"`과 `name: "platform"`으로
@@ -157,7 +157,7 @@ AirDesk 원격 컴퓨터 요청에서 `rcu`와 `RCU`는 이 스킬을 가리키�
   `disposition`으로 판단하세요. MCP가 켜져 있다고 엔진 지원이 증명되지는 않습니다. 엔진이나
   필요한 기능이 없으면 한계를 설명하고 그 UI 작업을 멈추세요. 예전 AirDesk 화면/창 자동화로
   대체하지 마세요. 컨트롤러 로컬 agent-desktop 서버를 대신 설치하거나 실행하지 마세요.
-- **원격 터미널(로컬·브리지 모드):** [terminal.md](references/terminal.md)를 읽으세요. PTY는 컨트롤러가 아니라
+- **원격 터미널(로컬 모드):** [terminal.md](references/terminal.md)를 읽으세요. PTY는 컨트롤러가 아니라
   대상에 있습니다. 출력 커서를 보존하고 응답 확인을 점검하세요. 입력이 수락되었다고 명령이
   성공한 것은 아닙니다.
 - **브라우저 UI/탭:** [browser-control.md](references/browser-control.md)를 읽으세요. 대상

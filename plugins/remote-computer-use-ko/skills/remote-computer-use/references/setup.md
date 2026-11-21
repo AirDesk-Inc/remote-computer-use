@@ -22,7 +22,7 @@ and missing consent. Absent and null fields mean unknown. For current session
 shell ownership, inspect `remote_status.targetRemoteTerminal.sessionConnected`.
 The desktop helper is bundled in the supported target app.
 
-For MCP/RCU remote-desktop work, the default connection policy and the skill
+For native MCP/RCU remote-desktop work, the connection policy and the skill
 explicitly use `video:true,showWindow:true`. A compatible native app must open a
 real interactive remote window on the controller, with local mouse/keyboard
 forwarding and the normal toolbar, subject to existing host input permissions;
@@ -344,22 +344,18 @@ OFF solely from a capability flag. After enabling, reconnect/recheck if needed.
 
 Online MCP lets a client that cannot start a local process (Claude or ChatGPT on
 the web or a phone, a cloud agent) use AirDesk through
-`https://mcp.airdesk.co.kr/mcp`. A single endpoint and sign-in support bridge
-and direct-host modes. See the [online connection guide](online.md).
+`https://mcp.airdesk.co.kr/mcp`. Online connections use the target host directly.
+See the [online connection guide](online.md).
 
-1. **Choose the AirDesk host or controller.** For direct mode, prepare the
+1. **Prepare the AirDesk host or controller.** Direct mode is the online default.
+   For direct mode, prepare the
    account-owned target with hosting, an interactive signed-in desktop, current
    AI terms, **AI remote computer use (MCP)** and **online MCP**. Confirm the
    grant offers `direct_host` in the live tool catalog and verify the target by
    direct discovery and connection.
-   For bridge mode, sign in to a bridge PC and enable those MCP settings there.
-   On Windows AirDesk 1.0.71 or later, keep `AirdeskService` and the signed-in
-   active console session running. On macOS, portable or older Windows, keep
-   the AirDesk app running. The bridge owner can disable online tools.
 2. **Target.** Confirm hosting, access approval, and permissions for the task.
    Follow the [direct-host gate](online.md#direct-host-without-a-bridge) for a
-   direct session and the [bridge PC gate](online.md#additional-gate-for-the-bridge-pc)
-   for a bridge session.
+   direct session.
 3. **Sign in from the client**, one of:
    - **Claude (web, desktop and mobile):** Settings → Connectors → Add custom
      connector, URL `https://mcp.airdesk.co.kr/mcp`, then Connect and approve
@@ -379,8 +375,8 @@ and direct-host modes. See the [online connection guide](online.md).
      `claude-code`, `cursor` and `opencode`). The installer writes only a
      reference to the variable, never the key.
 4. For OAuth, sign in to AirDesk with the usual account requirements. Choose the
-   scopes (`observe`, `input`, `terminal`), expiry, allowed computers and optional
-   bridge PC, then approve in the browser. Revoke a grant or key in My Page at
+   scopes (`observe`, `input`), expiry and allowed computers, then approve in the
+   browser. Revoke a grant or key in My Page at
    any time.
 
 An `airdesk` entry already registered for local mode is not replaced; remove it

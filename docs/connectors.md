@@ -27,14 +27,13 @@ plugins.
   mobile apps. Claude discovers OAuth through the 401 `WWW-Authenticate`
   `resource_metadata`, registers dynamically (`/oauth/register`; its redirect is
   an `https` URL on claude.ai, which the gateway accepts) and uses PKCE S256.
-  Sign in to AirDesk, select the scopes, expiry, allowed computers and optional
-  bridge PC, then approve in the browser.
+  Sign in to AirDesk, select the scopes, expiry and allowed computers, then approve in the browser.
 - **Skill:** upload `pack --lang <lang>` output. The connector alone already
   receives the gateway's `initialize` instructions; the skill adds the full
   gate, target-OS guide and error handling.
 - **Directory listing** requires review by Anthropic. Prepare: tool
   annotations (below), a privacy policy and terms URL, support contact, logo,
-  test account and a reviewer guide covering the bridge PC requirement.
+  test account and a reviewer guide covering direct-host access.
 
 ## ChatGPT (App)
 
@@ -84,17 +83,6 @@ Still open:
 
 ## Security Notes for Reviewers
 
-- In bridge mode the bridge PC runs the controller under its own MCP settings
-  and per-PC tool deny list, which blocks `remote_desktop_launch` by default.
-  The gateway applies its denied-argument filter to online tools.
-- The bridge PC needs an AirDesk sign-in and current AI terms. On Windows with
-  AirDesk 1.0.71 or later installed, `AirdeskService` runs the bridge in the
-  signed-in console session after the AirDesk window closes. The app runs the
-  bridge on macOS, portable Windows and older Windows versions.
-- Grants are per scope, optionally limited to listed computers and one bridge
-  PC, expire, and are revocable in My Page. Use from a new country is recorded and,
-  when mail is configured, emailed to the account owner.
-- Bridge `remote_connect` opens the required visible remote window on the
-  bridge PC (`WINDOW_REQUIRED`). Eligible grants also offer `direct_host` for
-  approved account-owned targets. Direct sessions use target consent and
-  agent-desktop observations. [Direct-host guide](../skills/remote-computer-use/references/online.md#direct-host-without-a-bridge)
+- Online requests use the account-owned target directly with target consent and scope checks.
+- Grants may be restricted to listed computers, expire, and are revocable in My Page.
+- Online direct calls are subject to the target app launch policy and argument restrictions.

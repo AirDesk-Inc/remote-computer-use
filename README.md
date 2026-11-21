@@ -87,12 +87,6 @@ when the tool catalog advertises it. Use the existing account API key or OAuth
 grant and follow [direct discovery and connection](skills/remote-computer-use/references/online.md#direct-host-without-a-bridge).
 App launches follow the target's [direct app launch policy](skills/remote-computer-use/references/online.md#direct-app-launch).
 
-Bridge mode runs calls on your **bridge PC** with AirDesk 1.0.66 or later. Sign in,
-accept the current AI terms and turn on AI remote computer use and online MCP
-there. With AirDesk 1.0.71 or later installed on Windows, `AirdeskService` keeps
-the bridge available after the window closes while a user remains signed in to
-the active Windows console session. On macOS, portable Windows and older Windows
-versions, keep AirDesk running.
 Online clients connect directly to the gateway, including on web and mobile.
 
 | Where | How |
@@ -103,7 +97,7 @@ Online clients connect directly to the gateway, including on web and mobile.
 | Coding agents | `install --mode online --client <id>` (`codex`, `claude-code`, `cursor`, `vscode`, `gemini-cli`, `opencode`, `generic`). Add `--auth key` to read an API key from `AIRDESK_MCP_KEY` instead of OAuth. |
 
 After signing in to AirDesk, choose scopes (`observe`, `input`, `terminal`),
-expiry, allowed computers and an optional bridge PC, then approve in the browser.
+expiry and allowed computers, then approve in the browser.
 Revoke grants and keys in AirDesk My Page. See the [online guide](skills/remote-computer-use/references/online.md) and
 [connectors](docs/connectors.md).
 
@@ -199,7 +193,7 @@ You can shorten the skill name to `rcu` or `RCU` in conversation:
 This is conversational shorthand only. Package, executable and MCP tool names are
 unchanged, and the same setup and approval requirements apply.
 
-MCP/RCU remote-desktop connections must open a **real interactive remote window
+Native MCP/RCU remote-desktop connections must open a **real interactive remote window
 on the controller**, not an observation-only window. The default policy and the
 skill explicitly use `video:true,showWindow:true`, with local mouse/keyboard
 forwarding and the normal toolbar, subject to existing host input permissions.

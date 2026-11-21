@@ -4,4 +4,4 @@ interface:
   icon_small: "./assets/airdesk-symbol.svg"
   icon_large: "./assets/airdesk-lockup.svg"
   brand_color: "#176BFF"
-  default_prompt: "승인된 AirDesk 작업에 $remote-computer-use (RCU)를 사용하세요. 대상 접근 권한을 확인하고 해당 OS 가이드를 적용하세요. 브리지 없는 연결을 요청하고 도구 목록이 지원하면 direct_host로 연결하세요. 로컬·브리지 데스크톱 작업은 보이는 대화형 창에서 진행하세요."
+  default_prompt: "승인된 AirDesk 작업에 $remote-computer-use (RCU)를 사용하세요. 대상 접근 권한을 확인하고 온라인 작업은 direct_host로 연결하며 대상 OS 가이드를 적용하세요. 로컬 데스크톱 작업은 보이는 대화형 창에서 진행하세요."

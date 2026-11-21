@@ -4,7 +4,7 @@ description: AirDesk remote-computer-use をインストールまたは明示的
 license: MIT for original skill content and scripts; material adapted from vercel-labs/agent-desktop is under Apache-2.0 (see THIRD_PARTY_NOTICES.md); AirDesk logos and trademarks excluded (see assets/NOTICE.md).
 metadata:
   author: AirDesk-Inc
-  version: "0.4.13"
+  version: "0.4.14"
   language: ja
 ---
 
@@ -43,8 +43,7 @@ AirDesk のリモートコンピューターの依頼では、`rcu` と `RCU` �
   ツール一覧に `local_*` ツールがあり、このコンピューターがコントローラーです。
 - **オンラインモード:** クライアントが `https://mcp.airdesk.co.kr/mcp` に接続します。たとえば
   スマートフォンの Claude や ChatGPT がこの方式です。ツール一覧に `local_*` ツールはありません。
-  既定のブリッジモードでは、アカウントの **ブリッジ PC** がコントローラーです。ブリッジを
-  介さない **直接接続** (`direct_host`) では、ゲートウェイが選択した対象ホストへ呼び出しを中継します。
+  既定の **直接接続** (`direct_host`) では、ゲートウェイが選択した対象ホストへ呼び出しを中継します。
   最初の呼び出しの前に、認証と接続手順を確認してください。[オンライン MCP](references/online.md)
 
 ツールの利用可否は接続モード、現在のスキーマ、権限によって決まります。どのモードでも作業の許可、
@@ -54,15 +53,15 @@ AirDesk のリモートコンピューターの依頼では、`rcu` と `RCU` �
 
 接続、画面キャプチャ、入力、ターミナルを開く前に、ユーザーが対象と作業を許可したことを確認してください。
 
-1. **ローカル/ブリッジのコントローラー:** AirDesk にログインし、**AIによるリモートコンピューター操作(MCP)** をオンにして、アプリで現在の AI 規約に同意します。オンラインのブリッジ PC では **オンライン MCP** も必要です。
+1. **ローカルのコントローラー:** AirDesk にログインし、**AIによるリモートコンピューター操作(MCP)** をオンにして、アプリで現在の AI 規約に同意します。
 2. **対象:** AirDesk が実行中で、所有者がホスティングとこのユーザーのアクセスを承認している必要があります。UI 操作には対象アカウントの現行 AI 規約への同意と適用される入力権限が必要です。macOS のアクセシビリティ操作には OS の許可が必要です。直接接続では対象ホストで **AIによるリモートコンピューター操作(MCP)** と **オンライン MCP** を有効にし、対象に操作可能なログイン済みデスクトップを用意します。
-3. **ローカル/ブリッジのシェル作業:** 対象がリモートターミナルをサポートし、機能がオンで、所有者がアプリで現在の規約に同意している必要があります。直接接続ではターミナルを利用できません。
+3. **ローカルのシェル作業:** 対象がリモートターミナルをサポートし、機能がオンで、所有者がアプリで現在の規約に同意している必要があります。直接接続ではターミナルを利用できません。
 
 `target_ai_remote_access_terms_required` の場合、対象の所有者がそのコンピューターで現行規約を確認して同意します。`target_ai_remote_access_policy_unavailable` の場合は、対象の AirDesk のサインイン状態を確認してから再試行してください。
 
-ローカル/ブリッジモードでは検出前に `remote_status` を読みます。`mcpEnabled`、`mcpServerEnabled`、`credentialAvailable`、`termsAccepted` は true、`termsRequired` は false、`blockedReason` は空である必要があります。規約情報の欠落は未確認です。`remoteTerminalEnabled` はコントローラーの着信シェル設定で、オフのままで構いません。`ai_remote_access_terms_required` ならコントローラーのユーザーに AirDesk へのログインと規約の確認を依頼し、`policy_unavailable` なら設定へのアクセスを先に復旧します。
+ローカルモードでは検出前に `remote_status` を読みます。`mcpEnabled`、`mcpServerEnabled`、`credentialAvailable`、`termsAccepted` は true、`termsRequired` は false、`blockedReason` は空である必要があります。規約情報の欠落は未確認です。`remoteTerminalEnabled` はコントローラーの着信シェル設定で、オフのままで構いません。`ai_remote_access_terms_required` ならコントローラーのユーザーに AirDesk へのログインと規約の確認を依頼し、`policy_unavailable` なら設定へのアクセスを先に復旧します。
 
-ローカル/ブリッジのシェル作業では、`remote_list_computers` で許可された対象を確認し、対象の `targetRemoteTerminal` の `supported`、`enabled`、`termsAccepted`、`termsVersion` を読みます。false は未対応、設定がオフ、または規約への未同意を表します。欠落と null は不明です。互換フィールド `terminalAdvertised` と `terminalSupported` は旧版でも false になる場合があります。確認できた不足条件だけを所有者に依頼してください。ホスト全体の `connected` は一覧を更新して読み、現在の MCP セッションが開いたシェルは `remote_status` の `sessionConnected` で確認します。ターミナルの許可はホストが判断します。
+ローカルのシェル作業では、`remote_list_computers` で許可された対象を確認し、対象の `targetRemoteTerminal` の `supported`、`enabled`、`termsAccepted`、`termsVersion` を読みます。false は未対応、設定がオフ、または規約への未同意を表します。欠落と null は不明です。互換フィールド `terminalAdvertised` と `terminalSupported` は旧版でも false になる場合があります。確認できた不足条件だけを所有者に依頼してください。ホスト全体の `connected` は一覧を更新して読み、現在の MCP セッションが開いたシェルは `remote_status` の `sessionConnected` で確認します。ターミナルの許可はホストが判断します。
 
 コントローラーに AirDesk がないか MCP がオフの場合は、[セットアップ手順](references/setup.md)を案内します。明示的にインストールを依頼された場合は、ネイティブ MCP を登録し、AirDesk の一回限りの設定コマンドでコントローラーの MCP を有効にできます。
 
@@ -83,7 +82,7 @@ AirDesk のリモートコンピューターの依頼では、`rcu` と `RCU` �
 直接接続では、ライブのスキーマで `mode: "direct_host"` が利用できることを確認し、対象の検出から
 セッション確認までオンラインガイドの手順に従ってください。[ブリッジ PC なしの直接接続](references/online.md#ブリッジ-pc-なしの直接接続)
 
-ローカルモードとオンラインのブリッジモードでは、次の手順を使います。
+ローカルモードでは、次の手順を使います。
 
 1. AirDesk サーバーのツールを検出し、現在のスキーマを基準にしてください。クライアント固有の
    ツール接頭辞を仮定したり、別の MCP サーバーに黙って置き換えたりしないでください。想定される
@@ -98,7 +97,6 @@ AirDesk のリモートコンピューターの依頼では、`rcu` と `RCU` �
    マウス/キーボード転送と通常のツールバーを備えた実際の対話型リモートウィンドウを
    コントローラーで開きます。`showWindow:false` や `video:false` は、ユーザーがヘッドレスまたは
    映像なしの作業を明示的に依頼したときだけ使います。`video:false` はウィンドウも無効にします。
-   オンラインのブリッジモードではどちらも使えません(`WINDOW_REQUIRED`)。
    先に現在のスキーマを確認してください。`showWindow` がない、またはネイティブビルドが観察専用の
    ウィンドウしか提供しない場合は、デスクトップ入力を停止し、対応するアプリの更新を依頼して
    ください。オプションを黙って省いたり、ヘッドレスに切り替えたりしないでください。返された
@@ -120,7 +118,7 @@ AirDesk のリモートコンピューターの依頼では、`rcu` と `RCU` �
 新しい接続に持ち込まないでください。
 
 1. **OS の判定。** `remote_connect` の結果から `targetOs` と、結果に含まれる場合は
-   `agentDesktopPlatformSkill` を読みます。ローカル/ブリッジモードでは `remote_status` も確認できます。
+   `agentDesktopPlatformSkill` を読みます。ローカルモードでは `remote_status` も確認できます。
    アプリがこれらのフィールドより古い場合は、
    `remote_list_computers` の同じ `hostId` の項目の `os` を使います。`windows`/`win32` は
    Windows に、`macos`/`darwin`/`mac` は macOS に正規化します。
@@ -128,7 +126,7 @@ AirDesk のリモートコンピューターの依頼では、`rcu` と `RCU` �
    - Windows → [platform-windows.md](references/platform-windows.md)
    - macOS → [platform-macos.md](references/platform-macos.md)
    - それ以外または不明 → AirDesk では agent-desktop の UI 自動化を使えません。その旨を説明し、
-     UI 作業を停止してください。ローカル/ブリッジモードでは、独自の確認を経てターミナル作業が可能な場合があります。
+     UI 作業を停止してください。ローカルモードでは、独自の確認を経てターミナル作業が可能な場合があります。
 3. **コアガイドを読み込む:** CLI から MCP への変換と disposition の規則を含む
    [agent-desktop.md](references/agent-desktop.md)。
 4. **対象で確認:** `remote_desktop_skills_get` を `name: "desktop"` と `name: "platform"` で
@@ -169,7 +167,7 @@ AirDesk のリモートコンピューターの依頼では、`rcu` と `RCU` �
   制限を説明し、その UI 作業を停止してください。従来の AirDesk の画面/ウィンドウ自動化に切り替え
   ないでください。コントローラーのローカルに agent-desktop サーバーを代わりにインストール・実行
   しないでください。
-- **リモートターミナル:** ローカルまたはオンラインのブリッジモードで [terminal.md](references/terminal.md) を読んでください。PTY は
+- **リモートターミナル:** ローカルモードで [terminal.md](references/terminal.md) を読んでください。PTY は
   コントローラーではなく対象にあります。出力カーソルを保持し、応答の確認を点検してください。
   入力が受け付けられても、コマンドが成功したとは限りません。
 - **ブラウザーの UI/タブ:** [browser-control.md](references/browser-control.md) を読んでください。

@@ -4,7 +4,7 @@ Use [agent-desktop.md](agent-desktop.md) for screenshots, display discovery, poi
 
 ## Session Window
 
-Visible native and bridge MCP connections open a **real interactive remote
+Visible native MCP connections open a **real interactive remote
 window** on the **controller**, with local mouse/keyboard forwarding and the normal toolbar,
 subject to existing host input permissions. An observation-only window does not
 satisfy this policy. Native MCP/agent ownership (`agentControlMode`), returned
@@ -24,13 +24,13 @@ Do not promise automatic clipboard or audio.
 
 | Connection mode | Arguments | Result |
 | --- | --- | --- |
-| Default interactive remote desktop | Explicitly set `video:true,showWindow:true` (also the default policy) | Video and a real remote window with local mouse/keyboard and the normal toolbar. |
+| Native interactive desktop | Set `video:true,showWindow:true`. | Video and a real remote window with local mouse/keyboard and the normal toolbar. |
 | User-requested headless | `video:true,showWindow:false` | Video and screenshot tools remain available without a window. |
 | User-requested no-video | `video:false` | No video or window, regardless of `showWindow`. |
 | Online direct host | `mode:"direct_host"` with an exact authorized `hostId` | Snapshots and screenshots from the target's agent-desktop tools. Status uses the returned `sessionId`. |
 
 For online direct mode, follow [direct-host discovery and connection](online.md#direct-host-without-a-bridge).
-The window behavior below applies to local and bridge modes. Use headless or
+The window behavior below applies to local mode. Use headless or
 no-video local mode only when the user explicitly requests it. Controller `remote_status` reports `videoEnabled`
 and `showVideoWindow` separately; neither replaces inspection of an actual frame.
 Neither flag proves local input forwarding or the normal toolbar works.

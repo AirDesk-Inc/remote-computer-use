@@ -1,10 +1,10 @@
 ---
 name: remote-computer-use
-description: Set up AirDesk remote-computer-use or operate an authorized remote Windows/macOS computer with AirDesk MCP and agent-desktop. Use native stdio, the online bridge, or direct online MCP to an account-owned host, including from API-key clients and mobile connectors. Apply the target OS guide. Use for AirDesk rcu or RCU requests. Not for local desktop control.
+description: Set up AirDesk remote-computer-use or operate an authorized remote Windows/macOS computer with AirDesk MCP and agent-desktop. Use native stdio, direct online MCP to an account-owned host, including from API-key clients and mobile connectors. Apply the target OS guide. Use for AirDesk rcu or RCU requests. Not for local desktop control.
 license: MIT for original skill content and scripts; material adapted from vercel-labs/agent-desktop is under Apache-2.0 (see THIRD_PARTY_NOTICES.md); AirDesk logos and trademarks excluded (see assets/NOTICE.md).
 metadata:
   author: AirDesk-Inc
-  version: "0.4.13"
+  version: "0.4.14"
 ---
 
 # AirDesk Remote Computer Use
@@ -15,7 +15,7 @@ client (local mode) or a remote MCP client signed in to AirDesk online MCP
 
 AirDesk labels its MCP setting **AI remote computer use** (**AI가 원격 컴퓨터 사용** in Korean).
 Older builds may call it **MCP server** or **MCP mode**. The setting applies on
-the controller for native or bridge connections and on the target for direct
+the controller for native connections and on the target for direct
 online connections. UI work uses the integrated
 [agent-desktop](https://github.com/vercel-labs/agent-desktop) tools.
 
@@ -41,33 +41,32 @@ Apache License 2.0; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and
   catalog includes `local_*` tools, and this computer is the controller.
 - **Online mode:** the client talks to `https://mcp.airdesk.co.kr/mcp`, for
   example from an API-key client or a connector on a phone. Read
-  [online.md](references/online.md) before the first call. Online bridge mode
-  uses the account's bridge PC as the visible controller. Online `direct_host`
-  reaches an owned host without a bridge when the live catalog offers it.
+  [online.md](references/online.md) before the first call. Online mode defaults
+  to `direct_host`, which reaches an owned host without a bridge.
 
 Discover the active tool catalog. Direct sessions provide desktop tools with
-target-policy checks. Terminal tools require a local or bridge connection.
+target-policy checks. Terminal tools require a local connection.
 
 ## Mandatory Gate
 
 Before any connection, screenshot, input or terminal operation, confirm the
 user authorized the specific target and task.
 
-1. **Local controller or bridge PC.** AirDesk is installed, the user is signed
+1. **Local controller.** AirDesk is installed, the user is signed
    in, and **AI remote computer use (MCP) is ON** with current in-app AI terms
-   accepted. The bridge PC also needs **online MCP** ON.
+   accepted.
 2. **Target:** AirDesk is running with hosting enabled and the owner has
    approved this user's access. Desktop and browser actions require the
    applicable input permission and the target account's current AI terms.
-   macOS accessibility requires its OS permission. For local and bridge mode,
+   macOS accessibility requires its OS permission. For local mode,
    the target's MCP switch governs its own use as a controller. Direct mode
    requires an account-owned target with a signed-in interactive desktop and
    both MCP settings on that target. Use the [direct-host gate](references/online.md#direct-host-without-a-bridge).
-3. **Shell over local or bridge mode only.** The target needs a supported Remote Terminal host, its own
+3. **Shell over local mode only.** The target needs a supported Remote Terminal host, its own
    Remote Terminal setting enabled and current host terms accepted. The owner
    accepts terms in AirDesk.
 
-For local and bridge modes, read `remote_status` before discovery. Require `mcpEnabled`,
+For local mode, read `remote_status` before discovery. Require `mcpEnabled`,
 `mcpServerEnabled`, `credentialAvailable` and `termsAccepted` to be true,
 `termsRequired` to be false and `blockedReason` empty. Missing consent data is
 unverified. `remoteTerminalEnabled` is the controller's incoming shell setting
@@ -80,7 +79,7 @@ accepts the current terms on that computer. For
 `target_ai_remote_access_policy_unavailable`, have the target owner verify
 their signed-in AirDesk profile before retrying.
 
-For local and bridge modes, use `remote_list_computers` to confirm the target and read
+For local mode, use `remote_list_computers` to confirm the target and read
 `targetRemoteTerminal` when shell work is needed. Its `supported`, `enabled`,
 `termsAccepted` and `termsVersion` describe the target. A false value can
 identify unsupported hosting, a disabled setting or missing acceptance.
@@ -115,7 +114,7 @@ and diagnostics, not execution of remote tasks.
 
 For online `direct_host`, follow [direct-host discovery and connection](references/online.md#direct-host-without-a-bridge),
 then apply the target OS guide below. The following window and readiness steps
-apply to native and online bridge connections.
+apply to native connections.
 
 1. Discover the AirDesk server's tools; use their current schemas as authoritative.
    Do not assume a client-specific tool prefix or silently substitute another MCP
@@ -131,7 +130,6 @@ apply to native and online bridge connections.
    subject to existing host input permissions, not an observation-only window.
    Use `showWindow:false` or `video:false` only when the user explicitly requests
    headless or no-video work, respectively; `video:false` also disables the window.
-   Online bridge mode requires both (`WINDOW_REQUIRED`).
    Check the current schema first. If `showWindow` is missing or the native build
    only provides an observation-only window, stop desktop input and request a
    compatible app update; do not silently omit the option or fall back to headless.
@@ -209,13 +207,13 @@ and does not turn on, the window's automatic sync. See the
   required capability is unavailable, explain the limitation and stop that UI
   task; do not fall back to legacy AirDesk screen/window automation.
   Do not install/run a controller-local agent-desktop server as a substitute.
-- **Remote terminal in local or bridge mode.** Read [terminal.md](references/terminal.md). The PTY is on
+- **Remote terminal in local mode.** Read [terminal.md](references/terminal.md). The PTY is on
   the target, never on the controller. Preserve output cursors and inspect
   acknowledgments. Accepted input is not proof that a command succeeded.
 - **Browser UI/tabs:** read [browser-control.md](references/browser-control.md).
   Use agent-desktop accessibility and input tools on the target browser.
   Do not enable debugging or substitute local browser control.
-- **Debug logs in local or bridge mode.** `local_debug_mode` refers to the controller;
+- **Debug logs in local mode.** `local_debug_mode` refers to the controller;
   `remote_debug_mode` refers to the selected target. Omit `enabled` to read.
   Setting `enabled` persists the selected computer's log setting. Change it only
   when the task authorizes that setting change, and report whether a temporary
@@ -250,7 +248,7 @@ Stop immediately if consent is revoked, MCP is turned off, or permissions fail.
 Release any keys/buttons held by this task. Close only terminals you opened,
 checking whether closure is acknowledged or pending. Disconnect the session you
 created using `remote_disconnect`. Do not close another user's app/session.
-In local or bridge mode, closing this task's real remote window also ends its owned MCP session and starts
+In local mode, closing this task's real remote window also ends its owned MCP session and starts
 owned-terminal/held-input cleanup. Treat a user closing it as a session stop;
 do not silently reconnect or continue using the old session ID.
 Integrated agent-desktop refs and private helper state expire on teardown. On

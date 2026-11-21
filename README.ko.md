@@ -73,11 +73,6 @@ node bin/cli.mjs install --mode online --client claude-code
 직접 연결할 수 있습니다. [직접 모드 연결 절차](locales/ko/references/online.md#직접-모드-연결)를 참고하세요.
 앱 실행에는 대상의 [직접 모드 앱 실행 정책](locales/ko/references/online.md#직접-모드-앱-실행)이 적용됩니다.
 
-브리지 모드는 AirDesk 1.0.66 이상이 있는 **브리지 PC**에서 호출을 실행합니다. 브리지 PC에서
-AirDesk에 로그인하고 현재 AI 추가약관에 동의한 뒤 ‘AI가 원격 컴퓨터 사용’과 ‘온라인 MCP’를 켜세요.
-Windows에 설치한 AirDesk 1.0.71 이상은 활성 Windows 콘솔 세션에 사용자가 로그인한 동안
-`AirdeskService`가 브리지를 실행하므로 AirDesk 창을 닫아도 됩니다. macOS, Windows 포터블 및
-이전 Windows용 AirDesk에서는 앱을 켜 두세요.
 웹이나 모바일을 포함한 온라인 클라이언트는 게이트웨이에 직접 연결합니다.
 
 | 사용처 | 방법 |
@@ -87,8 +82,8 @@ Windows에 설치한 AirDesk 1.0.71 이상은 활성 Windows 콘솔 세션에 �
 | Claude Code 플러그인 | `/plugin marketplace add AirDesk-Inc/remote-computer-use` 후 `remote-computer-use`, `remote-computer-use-ko`, `remote-computer-use-ja` 중 설치 |
 | 코딩 에이전트 | `install --mode online --client <id>`(`codex`, `claude-code`, `cursor`, `vscode`, `gemini-cli`, `opencode`, `generic`). OAuth 대신 `AIRDESK_MCP_KEY`의 API 키를 쓰려면 `--auth key` 추가 |
 
-AirDesk에 로그인한 뒤 권한 범위(`observe`, `input`, `terminal`), 만료, 허용할 컴퓨터와
-필요할 경우 브리지 PC를 선택하고 브라우저에서 승인하세요. 승인과 키는 AirDesk 마이페이지에서
+AirDesk에 로그인한 뒤 권한 범위(`observe`, `input`), 만료, 허용할 컴퓨터를
+선택하고 브라우저에서 승인하세요. 승인과 키는 AirDesk 마이페이지에서
 폐기합니다. [온라인 가이드](locales/ko/references/online.md)와
 [커넥터 문서](docs/connectors.md)를 참고하세요.
 
@@ -178,7 +173,7 @@ npm 설치기의 AirDesk 사전 점검은 수행하지 않으므로 MCP 설정�
 대화용 약칭일 뿐이며 패키지·실행 파일·MCP 도구 이름은 그대로입니다.
 약칭을 사용해도 기존 설치 조건과 승인 절차는 동일하게 적용됩니다.
 
-MCP/RCU 원격 데스크톱 연결은 관찰 전용 창이 아닌 **실제로 조작할 수 있는 원격 창을
+네이티브 MCP/RCU 원격 데스크톱 연결은 관찰 전용 창이 아닌 **실제로 조작할 수 있는 원격 창을
 제어 PC에 열어야 합니다.** 기본 연결 정책과 스킬 모두 `video:true,showWindow:true`를
 명시적으로 사용하며, 기존 호스트 입력 권한 범위에서 로컬 마우스·키보드 전달과 일반
 도구 모음을 제공합니다. 사용자와 AI가 같은 창에 입력하므로 사용자가 조작하는 동안

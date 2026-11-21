@@ -4,4 +4,4 @@ interface:
   icon_small: "./assets/airdesk-symbol.svg"
   icon_large: "./assets/airdesk-lockup.svg"
   brand_color: "#176BFF"
-  default_prompt: "許可された AirDesk の作業に $remote-computer-use を使ってください。対象へのアクセスを確認し、対象 OS のガイドを適用してください。ブリッジなしの接続を求められ、ツール一覧が対応する場合は direct_host を使ってください。ローカルまたはブリッジのデスクトップ操作には表示中の対話型ウィンドウを使ってください。"
+  default_prompt: "許可された AirDesk の作業に $remote-computer-use を使ってください。対象へのアクセスを確認し、オンラインでは direct_host と対象 OS ガイドを使ってください。ローカルのデスクトップ操作には表示中の対話型ウィンドウを使ってください。"
