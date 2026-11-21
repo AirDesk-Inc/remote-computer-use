@@ -82,7 +82,11 @@ in every language. Switching an installed copy to another language needs
 
 ### Online MCP, mobile and plugins
 
-Online MCP runs calls on your **bridge PC** with AirDesk 1.0.66 or later. Sign in,
+Online MCP supports an account-owned target in **direct mode** (`direct_host`)
+when the tool catalog advertises it. Use the existing account API key or OAuth
+grant and follow [direct discovery and connection](skills/remote-computer-use/references/online.md#direct-host-without-a-bridge).
+
+Bridge mode runs calls on your **bridge PC** with AirDesk 1.0.66 or later. Sign in,
 accept the current AI terms and turn on AI remote computer use and online MCP
 there. With AirDesk 1.0.71 or later installed on Windows, `AirdeskService` keeps
 the bridge available after the window closes while a user remains signed in to

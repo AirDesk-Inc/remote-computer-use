@@ -84,9 +84,9 @@ Still open:
 
 ## Security Notes for Reviewers
 
-- The client never executes anything; the bridge PC does, under its own MCP
-  mode, online MCP switch, per-PC tool deny list (default `remote_desktop_launch`)
-  and denied-argument filter.
+- In bridge mode the bridge PC runs the controller under its own MCP settings
+  and per-PC tool deny list, which blocks `remote_desktop_launch` by default.
+  The gateway applies its denied-argument filter to online tools.
 - The bridge PC needs an AirDesk sign-in and current AI terms. On Windows with
   AirDesk 1.0.71 or later installed, `AirdeskService` runs the bridge in the
   signed-in console session after the AirDesk window closes. The app runs the
@@ -94,5 +94,7 @@ Still open:
 - Grants are per scope, optionally limited to listed computers and one bridge
   PC, expire, and are revocable in My Page. Use from a new country is recorded and,
   when mail is configured, emailed to the account owner.
-- `remote_connect` online always opens the visible remote window on the bridge
-  PC (`WINDOW_REQUIRED`), so a person at that PC can see and stop the work.
+- Bridge `remote_connect` opens the required visible remote window on the
+  bridge PC (`WINDOW_REQUIRED`). Eligible grants also offer `direct_host` for
+  approved account-owned targets. Direct sessions use target consent and
+  agent-desktop observations. [Direct-host guide](../skills/remote-computer-use/references/online.md#direct-host-without-a-bridge)

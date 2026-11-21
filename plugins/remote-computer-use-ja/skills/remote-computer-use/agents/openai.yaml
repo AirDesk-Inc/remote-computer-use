@@ -4,4 +4,4 @@ interface:
   icon_small: "./assets/airdesk-symbol.svg"
   icon_large: "./assets/airdesk-lockup.svg"
   brand_color: "#176BFF"
-  default_prompt: "許可されたリモート作業に $remote-computer-use(RCU)を使ってください。コントローラーで AIによるリモートコンピューター操作(MCP)がオンであることを確認し、画面/ウィンドウ/ブラウザーの UI 自動化には対象の内蔵 remote_desktop_* ツールだけを使い、接続ごとに対象 OS(Windows または macOS)の agent-desktop ガイドを適用し、デスクトップ作業は表示中の対話型ウィンドウで行ってください。"
+  default_prompt: "許可された AirDesk の作業に $remote-computer-use を使ってください。対象へのアクセスを確認し、対象 OS のガイドを適用してください。ブリッジなしの接続を求められ、ツール一覧が対応する場合は direct_host を使ってください。ローカルまたはブリッジのデスクトップ操作には表示中の対話型ウィンドウを使ってください。"

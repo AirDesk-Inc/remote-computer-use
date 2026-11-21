@@ -69,7 +69,10 @@ node bin/cli.mjs install --mode online --client claude-code
 
 ### 온라인 MCP·모바일·플러그인
 
-온라인 MCP는 AirDesk 1.0.66 이상이 있는 **브리지 PC**에서 호출을 실행합니다. 브리지 PC에서
+도구 목록에 `direct_host`가 표시되면 기존 홈페이지 API 키 또는 OAuth로 본인 계정의 대상 PC에
+직접 연결할 수 있습니다. [직접 모드 연결 절차](locales/ko/references/online.md#직접-모드-연결)를 참고하세요.
+
+브리지 모드는 AirDesk 1.0.66 이상이 있는 **브리지 PC**에서 호출을 실행합니다. 브리지 PC에서
 AirDesk에 로그인하고 현재 AI 추가약관에 동의한 뒤 ‘AI가 원격 컴퓨터 사용’과 ‘온라인 MCP’를 켜세요.
 Windows에 설치한 AirDesk 1.0.71 이상은 활성 Windows 콘솔 세션에 사용자가 로그인한 동안
 `AirdeskService`가 브리지를 실행하므로 AirDesk 창을 닫아도 됩니다. macOS, Windows 포터블 및

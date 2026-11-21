@@ -343,18 +343,23 @@ OFF solely from a capability flag. After enabling, reconnect/recheck if needed.
 ## Online MCP and Mobile
 
 Online MCP lets a client that cannot start a local process (Claude or ChatGPT on
-the web or a phone, a cloud agent) use AirDesk. Calls go to
-`https://mcp.airdesk.co.kr/mcp` and run on the account's **bridge PC**. Rules
-for the agent are in [online.md](online.md).
+the web or a phone, a cloud agent) use AirDesk through
+`https://mcp.airdesk.co.kr/mcp`. A single endpoint and sign-in support bridge
+and direct-host modes. See the [online connection guide](online.md).
 
-1. **Bridge PC.** Sign in to AirDesk, accept the current AI terms, and turn on
-   **AI remote computer use (MCP)** and **online MCP**. With AirDesk 1.0.71 or
-   later installed on Windows, keep `AirdeskService` running and a user signed
-   in to the active Windows console session. You can close the AirDesk window.
-   On macOS, portable Windows and older Windows versions, keep the app running.
-   The owner can turn tools off for online calls. By default
-   `remote_desktop_launch` is off.
-2. **Target.** Prepare it exactly as in section 1.
+1. **Choose the AirDesk host or controller.** For direct mode, prepare the
+   account-owned target with hosting, an interactive signed-in desktop, current
+   AI terms, **AI remote computer use (MCP)** and **online MCP**. Confirm the
+   grant offers `direct_host` in the live tool catalog and verify the target by
+   direct discovery and connection.
+   For bridge mode, sign in to a bridge PC and enable those MCP settings there.
+   On Windows AirDesk 1.0.71 or later, keep `AirdeskService` and the signed-in
+   active console session running. On macOS, portable or older Windows, keep
+   the AirDesk app running. The bridge owner can disable online tools.
+2. **Target.** Confirm hosting, access approval, and permissions for the task.
+   Follow the [direct-host gate](online.md#direct-host-without-a-bridge) for a
+   direct session and the [bridge PC gate](online.md#additional-gate-for-the-bridge-pc)
+   for a bridge session.
 3. **Sign in from the client**, one of:
    - **Claude (web, desktop and mobile):** Settings → Connectors → Add custom
      connector, URL `https://mcp.airdesk.co.kr/mcp`, then Connect and approve

@@ -6,11 +6,14 @@ still applies; this file adds what differs online.
 
 ## How Online Mode Works
 
-- Endpoint: `https://mcp.airdesk.co.kr/mcp`, stateless Streamable HTTP.
-- Calls do not run on the phone, browser or cloud agent that sends them. The
-  gateway relays each call to a **bridge PC**: a computer of the same account
-  that acts as the *controller*. Its owner signs in to AirDesk, accepts the
-  current AI terms and turns on **AI remote computer use (MCP)** and **online MCP**.
+- Connect to `https://mcp.airdesk.co.kr/mcp` using stateless Streamable HTTP.
+- **Bridge** is the default online mode. The bridge PC belongs to the account
+  and acts as the controller with a visible remote desktop window. Its owner
+  signs in to AirDesk, accepts the current AI terms and turns on **AI remote
+  computer use (MCP)** and **online MCP**.
+- **Direct host** (`direct_host`) sends authenticated desktop tool requests and
+  results through the gateway to the selected AirDesk target. It uses the
+  same endpoint and account credentials without a separate bridge PC.
 - With AirDesk 1.0.71 or later installed on Windows, `AirdeskService` runs the
   bridge while a user is signed in to the active Windows console session.
   Closing the AirDesk window leaves the bridge available. Windows sign-out or
@@ -30,18 +33,73 @@ still applies; this file adds what differs online.
   then approve in the browser.
 - **API key**: the account owner creates an `amk_...` key under My Page → API
   keys (2FA required) and provides it through the environment variable
-  `AIRDESK_MCP_KEY` or the client's secret prompt.
+  `AIRDESK_MCP_KEY` or the client's secret prompt. Configure the remote MCP
+  client to send the key as `Authorization: Bearer <key>` on requests. Use a
+  secret reference in client configuration and keep the key out of the URL.
 - Never ask for a key, password or 2FA code in chat. Never print, store, log or
   forward one. If the server answers `MCP_KEY_INVALID`, ask the user to sign in
   again or replace the key in their client; do not retry in a loop.
+
+## Direct Host Without a Bridge
+
+1. Confirm the task and the exact target with the user. The target must be an
+   account-owned computer allowed by the key or OAuth grant. AirDesk hosting,
+   an interactive signed-in desktop, current AI terms, **AI remote computer
+   use (MCP)**, **online MCP**, and the target's task-specific permissions all
+   apply. Use `observe` for discovery and inspection and `input` for UI changes.
+2. Use `tools/list` to check that `remote_list_computers` and `remote_connect`
+   advertise `mode: "direct_host"` for this grant. Rollout and host versions
+   affect availability. If the option is absent, report that direct mode is
+   unavailable for this grant. The prior bridge pin applies to bridge calls.
+3. List with `{"mode":"direct_host"}`. In `structuredContent.computers`, choose
+   the exact authorized `hostId` with `online: true` and `canConnect: true`.
+   Use it for `remote_connect` with
+   `mode: "direct_host"`. Direct discovery and connection use `hostId` rather
+   than a nine-digit remote ID. Omit `video`, `showWindow`, `fps`, `codec`,
+   `width` and `height`.
+4. Check the connect result's `structuredContent` for `connected: true` and
+   `capabilities.desktop: true`. Keep the returned `sessionId` and opening
+   credential. Read
+   `remote_status` with that ID after connecting. Check `connected` and
+   `mode: "direct_host"`. A bare status call describes the bridge. Direct
+   status has no controller-window or video readiness flags. Use the connect
+   result's `targetOs` to apply the [target OS guide](../SKILL.md#apply-the-target-os-guide-automatic),
+   then obtain a fresh snapshot before input. Disconnect the owned session
+   with `remote_disconnect` when finished.
+
+Example tool arguments. Substitute the exact ID from each preceding result.
+
+```text
+remote_list_computers {"mode":"direct_host"}
+remote_connect {"mode":"direct_host","hostId":"<allowed-host-id>"}
+remote_status {"sessionId":"<returned-session-id>"}
+remote_desktop_snapshot {"sessionId":"<returned-session-id>"}
+remote_disconnect {"sessionId":"<returned-session-id>"}
+```
+
+Direct mode provides agent-desktop snapshots and screenshots of the target's
+actual desktop. It opens no controller window or video stream. Shared and team
+hosts and `terminal_*` calls are unavailable in direct mode. Use the live
+schema and the target's response to check each tool. Supported targets keep
+held-key and button down/up as standalone calls owned by the session and check
+each step of a direct batch individually. On supported Windows builds, direct
+launch accepts the installed system apps `notepad`, `calc` and `mspaint` with
+no launch arguments. A host tool block still applies.
+
+An unavailable target or grant can produce `BRIDGE_OFFLINE` even for a direct
+call. Check the target's AirDesk service, signed-in desktop and direct discovery.
+For `MCP_SESSION_NOT_OWNED`, use the opening credential and the current session
+ID. A timeout or `OUTCOME_UNKNOWN` requires a fresh observation before retry;
+if the session was retired, obtain authorization before reconnecting. Ask the
+user before switching an explicitly requested direct task to bridge mode.
 
 ## Scopes
 
 | Scope | Allows |
 | --- | --- |
-| `observe` | Discovery, status, connecting by `hostId`, screenshots, snapshots, find/get/is, lists including `remote_desktop_safari_list_controls`, wait, `remote_performance_diagnostics` |
-| `input` | Every other `remote_desktop_*` action (click, type, press, drag, scroll, launch of a bare app name, clipboard, permissions, trace export, session tools, cursor overlay), `remote_debug_mode`, connecting by a nine-digit remote ID |
-| `terminal` | `terminal_*`, launching a shell or script host or any launch with `args` |
+| `observe` | Discovery, status, connecting by `hostId`, screenshots, snapshots, find/get/is, lists, wait, bridge performance diagnostics |
+| `input` | UI mutations and other input-scoped `remote_desktop_*` tools. In bridge mode, this also covers debugging changes and connecting by a nine-digit remote ID. |
+| `terminal` | Bridge `terminal_*`, a launch through a shell or script host, or a bridge launch with `args` |
 
 `tools/list` shows the tools available to the grant. The updated online catalog
 lists `remote_desktop_batch` for `observe` grants. The gateway checks the required
@@ -80,10 +138,10 @@ controller booleans as true. These describe the **bridge PC**. Then:
   `remote_desktop_key_down` returns `BRIDGE_REJECTED` in online mode. The same
   rule applies to calls inside `remote_desktop_batch` and to `terminal` grants.
 
-- **Window required.** `remote_connect` must keep `video:true` and
+- **Bridge window required.** Bridge `remote_connect` must keep `video:true` and
   `showWindow:true`; `false` answers `WINDOW_REQUIRED`. Headless work is not
-  available online. The remote window opens **on the bridge PC**, not on the
-  user's phone. If the user is away from the bridge PC, say that someone there
+  available through the bridge. The remote window opens on the bridge PC. If
+  the user is away from the bridge PC, say that someone there
   can see and use that window, and rely on screenshots and snapshots for your
   own observation.
 - **Denied arguments.** The updated online tool schemas omit `output_path`,
@@ -99,7 +157,7 @@ controller booleans as true. These describe the **bridge PC**. Then:
   host and bridge against the applicable restrictions. A mismatch or missing
   required identity returns `MCP_SESSION_NOT_OWNED`. Status and discovery omit
   sessions outside the caller's grant or network.
-- **Reconnect after a network change.** Each bridge has one active remote
+- **Bridge reconnect after a network change.** Each bridge has one active remote
   session. A session ID is bound to the opening network when known. If a switch
   between Wi-Fi and mobile data causes `MCP_SESSION_NOT_OWNED`, check
   `remote_status` and rediscover the approved target. With a restricted grant,
@@ -133,12 +191,13 @@ controller booleans as true. These describe the **bridge PC**. Then:
 | `MCP_KEY_INVALID` (401) | Missing, expired or revoked sign-in | Ask the user to sign in again |
 | `MCP_SCOPE_REQUIRED` (403) | Grant lacks `scope` | Ask for the named scope |
 | `MCP_ONLINE_DISABLED` (403) | Online MCP not available for the account | Stop and explain |
-| `BRIDGE_OFFLINE` / `BRIDGE_AMBIGUOUS` | No bridge PC / several unpinned | See the bridge PC gate |
-| `WINDOW_REQUIRED` | Headless connect attempted | Reconnect with the window |
+| `BRIDGE_OFFLINE` | Selected direct host or required bridge unavailable | Check the affected computer's readiness |
+| `BRIDGE_AMBIGUOUS` | Several unpinned bridge PCs | See the bridge PC gate |
+| `WINDOW_REQUIRED` | Bridge connect omitted its visible window | Reconnect with the window |
 | `MCP_ARGUMENT_NOT_ALLOWED` | Denied argument | Remove it; return data inline |
 | `MCP_HOST_NOT_ALLOWED` | Computer outside the grant | Ask the user |
-| `MCP_SESSION_NOT_OWNED` | Session ended, network changed, or the grant cannot use it | Check status, target and bridge before an authorized reconnect |
+| `MCP_SESSION_NOT_OWNED` | Session ended or the grant cannot use it. Bridge sessions can also fail after a network change. | Check the session and its selected mode before an authorized reconnect |
 | `already_connected` | The selected bridge already has a session | Have the owner resolve a session you did not open |
-| `BRIDGE_REJECTED` | Bridge PC refused (deny list, argument, account) | Report the message; ask the owner |
+| `BRIDGE_REJECTED` / `TOOL_DISABLED` | Gateway or host policy refused the operation | Report the reason and respect the target owner's settings |
 | `BRIDGE_TIMEOUT` / `REGION_UNAVAILABLE` | No answer in time | Observe before any retry |
 | `RATE_LIMITED` / `QUOTA_EXHAUSTED` / `MCP_BUSY` / `MCP_SPEND_CAP` | Limits | Wait or stop as described above |
