@@ -110,6 +110,9 @@ Windows의 `remote_desktop_list_windows_resilient`와 알림 도구는 호스트
 
 - 호출당 약 55초가 주어집니다. `BRIDGE_TIMEOUT`과 `REGION_UNAVAILABLE`은 아무 일도 없었다는
   증거가 아닙니다. 변경 작업을 반복하기 전에 관찰하세요.
+- 직접 모드 세션은 호출 없이 약 15분이 지나면 세션이 소유한 것과 함께 닫힙니다. 오래 걸리는 작업은
+  그보다 짧은 간격으로 호출하세요. 세션이 닫히면 `MCP_SESSION_NOT_OWNED`가 반환됩니다. 다시 연결하고
+  대상을 관찰한 뒤에 변경 작업을 반복할지 판단하세요.
 - 약 5 MiB까지의 결과는 응답에 바로 담깁니다. 스크린샷보다 `remote_desktop_snapshot`과 `find`를
   먼저 쓰고, 스크린샷은 필요한 만큼만 작게 요청하세요.
 - `remote_list_computers`, `remote_status`, `remote_disconnect`, `tools/list`를 제외한 호출은

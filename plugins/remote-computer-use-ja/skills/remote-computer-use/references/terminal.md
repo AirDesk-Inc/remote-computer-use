@@ -49,6 +49,36 @@ software, or submit destructive commands outside the user's explicit request.
 AI remote computer use OFF, loss of access, or a stale session requires stopping and verifying
 setup again, not switching to SSH.
 
+## Long-Running Commands
+
+A shell keeps running between calls, but every call has a bounded wait (about
+55 seconds online, and `waitMs` up to 10000). Do not try to hold one call open
+until a long build, install, copy or test run finishes.
+
+1. Submit the command once, ideally with the unique completion marker described
+   below, and record the cursor before it.
+2. Check progress with `terminal_read` using a bounded `waitMs` and the last
+   `nextCursor`. Space checks to the expected duration rather than reading in a
+   tight loop. Each read is a separate call (metered when online), so a
+   minutes-long job needs a few reads, not hundreds. Wait in your own client between reads when it can.
+3. Finish only on the marker line with its exit status. Silence, a returned
+   prompt or `dropped: true` is not completion. A command that prompts for input
+   needs the user's decision; do not answer it on their behalf.
+4. A terminal belongs to its session. Closing the session, a revoked grant, a
+   lost connection or an idle timeout closes the terminal, and the foreground
+   command can stop with it. Keep reads spaced well within any session idle
+   limit, such as the online direct limit in
+   [online mode](online.md#time-size-and-cost).
+5. For work that must outlive the session, ask the user before detaching it.
+   With their consent, start it with the shell's own background facility and
+   send its output to a log the user approves, for example `nohup ... > log 2>&1 &`
+   on POSIX or `Start-Process` with redirected output in PowerShell. Record the
+   process ID. After reconnecting, open a new terminal and check the process
+   and log instead of starting the command again.
+
+If a session ended while a state-changing command was running, its outcome is
+unknown. Observe the target and report what you find before rerunning anything.
+
 ## Examples
 
 The following are tool arguments, not literal commands to paste into a local shell.

@@ -103,6 +103,9 @@ AirDesk のオンラインゲートウェイを使う場合は、最初のツー
 
 - 1 回の呼び出しに使えるのは約 55 秒です。`BRIDGE_TIMEOUT`、`REGION_UNAVAILABLE`、
   `OUTCOME_UNKNOWN` では、変更済みかどうかを観察してから再試行を判断してください。
+- 直接接続のセッションは、呼び出しがないまま約 15 分経つと、セッションが所有するものと一緒に閉じます。
+  長い作業ではそれより短い間隔で呼び出してください。セッションが閉じると `MCP_SESSION_NOT_OWNED` が返ります。
+  再接続して対象を観察してから、変更操作を繰り返すか判断してください。
 - 約 5 MiB までの結果は応答にそのまま含まれます。スクリーンショットより `remote_desktop_snapshot` と
   `find` を先に使い、スクリーンショットは必要な大きさだけを求めてください。
 - `remote_list_computers`、`remote_status`、`remote_disconnect`、`tools/list` 以外の呼び出しは

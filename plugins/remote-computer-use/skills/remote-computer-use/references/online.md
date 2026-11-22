@@ -133,6 +133,10 @@ into a GUI terminal with `input` only.
 
 - Each call has about 55 seconds. `BRIDGE_TIMEOUT` and `REGION_UNAVAILABLE` do
   not prove that nothing happened: observe before repeating any mutation.
+- A direct session closes after about 15 minutes without a call, together with
+  anything it owns. For long work, keep calls spaced within that window. If the
+  session closed, `MCP_SESSION_NOT_OWNED` follows: connect again and observe the
+  target before repeating any mutation.
 - Results up to about 5 MiB are returned inline. Prefer `remote_desktop_snapshot`
   and `find` over screenshots; request screenshots no larger than needed.
 - Calls are metered except `remote_list_computers`, `remote_status`,
