@@ -170,7 +170,9 @@ verify input state can still refuse.
 
 Current hosts include `airdeskHostGuidance` in successful
 `remote_desktop_skills_get` results. The upstream engine's stateless-mode note
-applies to its CLI and `remote_desktop_batch`. Older AirDesk hosts may
+(the platform guides' "Held input ... Fails closed on every platform with
+`ACTION_NOT_SUPPORTED`" row) applies to its CLI and `remote_desktop_batch`, not
+to these standalone tools; `airdeskHostGuidance` wins over that row. Older AirDesk hosts may
 return `ACTION_NOT_SUPPORTED` for the standalone calls. Use a single-call
 gesture if it satisfies the task on that host.
 
@@ -290,6 +292,15 @@ disconnect, closing the owned AirDesk window and helper teardown retire its
 processes and private ref/state namespace. A target setting change can reject
 subsequent calls; do not assume it cancels an action already running. Do not launch
 an independent MCP process to keep that state alive.
+
+The helper is a dedicated terminal channel that the first `remote_desktop_*`
+call on a connection opens (including the required `remote_desktop_skills_get`
+reads), so `remote_status.ownedTerminalIds` lists it before any
+`terminal_open`. It is reused for every desktop call and is not a shell: it
+stays owned after your own terminals close and ends only at disconnect, window
+close or helper EOF. Current controllers report it in `automationTerminalIds`
+and your `terminal_open` shells in `userTerminalIds`; `terminal_*` tools refuse
+a helper ID with `internal_terminal`. Do not close or count it as a leaked shell.
 
 On Windows, processes directly spawned by the engine inherit its Job Object
 lifetime and can close on disconnect. Before launching work that needs to

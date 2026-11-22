@@ -11,7 +11,9 @@ The rules below summarize and adapt the upstream `agent-desktop-windows` skill
 [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md))
 for AirDesk's MCP tools. The guide returned by
 `remote_desktop_skills_get` with `name: "platform"` on the target is the
-version-matched original and wins where they differ. Field notes are AirDesk
+version-matched original and wins where they differ, except where the same
+result's `airdeskHostGuidance` says otherwise: that text describes AirDesk's own
+additions on that host and takes precedence. Field notes are AirDesk
 observations, not upstream claims.
 
 ## Before the First Action
@@ -33,7 +35,8 @@ observations, not upstream claims.
 | Observe | `snapshot`, `find`, `get`, `is`, `screenshot` | Works. Surfaces: `window`, `focused`, Chromium modal as `sheet`, open menu as `menu` (no `menubar` surface). |
 | Ref actions | `click`, `set_value`, `clear`, `select`, `check`, `uncheck`, `toggle`, `expand`, `collapse`, `scroll`, `scroll_to` | Semantic UI Automation calls. |
 | Physical | `type`, `right_click`, `double_click`, `triple_click`, `focus`, `press`, `hover`, `drag`, `mouse_*` | Keystroke/pointer synthesis through `SendInput`. AirDesk runs them in headed mode; they can take the foreground of the visible remote desktop. |
-| Held input | `key_down`, `key_up`, `mouse_down`, `mouse_up` | Supported AirDesk hosts use the signed-in user's normal desktop. See [held input](agent-desktop.md#held-input). |
+| Held input | `key_down`, `key_up`, `mouse_down`, `mouse_up` | Supported on current AirDesk Windows hosts as standalone tools, on the signed-in user's normal desktop. The upstream platform guide's "Fails closed on every platform with `ACTION_NOT_SUPPORTED`" row describes the engine CLI and `remote_desktop_batch` only; `airdeskHostGuidance` overrides it for these tools. See [held input](agent-desktop.md#held-input). |
+| Window inventory | `list_windows` (not `list_windows_resilient`) | `remote_desktop_list_windows_resilient` is macOS-only. Current controllers refuse it for a Windows target with `platform_not_supported` before contacting the host; older hosts return `PLATFORM_NOT_SUPPORTED`. |
 | Apps/windows | `launch`, `close_app`, `list_apps`, `list_windows`, `focus_window`, `restore`, `minimize`, `maximize`, `move_window`, `resize_window` | Works; see launch rules below. |
 | Shell | `open_system_surface` | `start-menu`, `taskbar`, `system-tray`, `system-tray-overflow`, `action-center` (not `quick-settings`). |
 
@@ -98,6 +101,30 @@ All tool names above carry the `remote_desktop_` prefix and the `sessionId` argu
   keys based on the error alone. If Windows leaves the target in the background,
   bring the observed window forward in the visible remote session when authorized,
   then read back `is_focused` before sending keys.
+- **AirDesk host foreground fallback (host builds after 2026-11-12).** When
+  another app holds the foreground, the engine refuses headed `type`, `press`,
+  `focus`, `clear`, `click` variants and `focus_window` with `ACTION_FAILED`
+  "Target window did not become foreground before headed delivery"
+  (`not_delivered`, `retry: safe`). The host then passes foreground rights to the
+  engine once (no-op input event + `AllowSetForegroundWindow`) and replays the
+  same call once; the engine still checks the window identity. If the error is
+  still returned, Windows refused the grant: do not loop. Click the target's
+  title bar with `mouse_click` only when authorized, then read back
+  `is_focused`. `_meta["kr.co.airdesk/host_fallback"]` lists what the host tried.
+  `remote_desktop_batch` is never replayed.
+- **`focus_window` "did not settle" is read back on the host.** The host lists
+  windows twice; if exactly the requested window (same id, pid and process
+  instance) is focused, the result is success with
+  `data.airdesk_focus_readback.verified: true`, including the already-focused
+  no-op. The superseded engine refusal appears only as
+  `engine_result: {code, superseded: true}`, not as an error. Otherwise the
+  original error is returned unchanged.
+- **`type` into an element without keyboard focus.** "Target element lost focus
+  before physical input delivery" with `not_delivered` makes the host call
+  `focus` (UIA SetFocus) on the same `ref_id` once and replay `type` once. It
+  does not apply to `interval_ms` typing or a partly delivered `type`. If the
+  element refuses SetFocus, the original error is returned: click inside the
+  field first, then snapshot again.
 - **Korean `type` was once reordered.** Right after launching Notepad, a mixed
   Korean/ASCII `type` produced swapped words with
   `postcondition_mismatch`; repeated runs were exact. Use `set_value` for exact
