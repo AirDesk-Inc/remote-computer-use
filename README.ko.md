@@ -52,7 +52,7 @@ MCP 활성화는 설치 시 한 번만 수행하며 약관에 자동 동의하�
 
 ```sh
 git clone https://github.com/AirDesk-Inc/remote-computer-use.git
-cd remote-coumputer-use
+cd remote-computer-use
 npm ci --ignore-scripts
 node bin/cli.mjs install                                    # Codex (기본값)
 node bin/cli.mjs install --client detected                  # 이 PC에서 찾은 모든 지원 에이전트
@@ -271,6 +271,3 @@ agent-desktop 가이드는 [vercel-labs/agent-desktop](https://github.com/vercel
 [라이선스 원문](skills/remote-computer-use/licenses/agent-desktop-LICENSE.txt)을 참고하세요.
 AirDesk 앱 본체에는 적용되지 않습니다. 로고·상표·브랜드 이미지는 MIT에서 제외되며
 [별도 브랜드 조건](TRADEMARKS.md)을 따릅니다.
-
-저장소 주소의 `remote-coumputer-use`는 요청된 이름을 유지한 것이며,
-설치되는 스킬의 이름은 `remote-computer-use`입니다.

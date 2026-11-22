@@ -64,7 +64,7 @@ repository and run them from its root with Node.js 22 or later.
 
 ```sh
 git clone https://github.com/AirDesk-Inc/remote-computer-use.git
-cd remote-coumputer-use
+cd remote-computer-use
 npm ci --ignore-scripts
 node bin/cli.mjs install                                    # Codex (default)
 node bin/cli.mjs install --client detected                  # every supported agent found here
@@ -299,6 +299,3 @@ AirDesk app binaries/source are not relicensed by this repository.
 AirDesk logos, wordmarks, and branded imagery are excluded from MIT and covered
 by [separate brand terms](TRADEMARKS.md). No trademark rights or endorsement are
 granted by the software license.
-
-The repository URL intentionally retains `remote-coumputer-use`; the installed
-skill is named `remote-computer-use`.

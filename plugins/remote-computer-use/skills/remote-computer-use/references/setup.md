@@ -58,7 +58,7 @@ clone the official GitHub repository and run them from its root.
 
 ```sh
 git clone https://github.com/AirDesk-Inc/remote-computer-use.git
-cd remote-coumputer-use
+cd remote-computer-use
 npm ci --ignore-scripts
 node bin/cli.mjs install
 ```
@@ -199,9 +199,6 @@ Clone the public repository to a location you control:
 ```sh
 git clone https://github.com/AirDesk-Inc/remote-computer-use.git
 ```
-
-The repository name intentionally matches that URL, including `coumputer`.
-The skill name is correctly spelled `remote-computer-use`.
 
 For Codex on macOS/Linux, from the cloned repository:
 
