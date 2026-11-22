@@ -12,6 +12,11 @@ may indicate an older app. Wait for the owner before retrying a denied open.
 Use `sessionConnected` in selected `remote_status` to observe this MCP session's
 acknowledged shell. `connected` in refreshed discovery is host-wide.
 
+In an online direct session, discovery does not report `targetRemoteTerminal`.
+Use `capabilities.terminal` from the `remote_connect` result instead: it is true
+only with a `terminal` grant and the target's Remote Terminal setting ON with
+current terms accepted. When it is false, ask the owner and do not retry.
+
 | Tool | Arguments / behavior |
 | --- | --- |
 | `terminal_open` | `sessionId`, optional `rows` (2-200), `cols` (10-400), `waitMs` (0-10000). |

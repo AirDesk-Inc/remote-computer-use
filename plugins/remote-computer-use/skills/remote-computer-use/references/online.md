@@ -73,7 +73,13 @@ remote_disconnect {"sessionId":"<returned-session-id>"}
 
 Direct mode provides agent-desktop snapshots and screenshots of the target's
 actual desktop. It opens no controller window or video stream. Shared and team
-hosts and `terminal_*` calls are unavailable in direct mode. Use the live
+hosts are unavailable in direct mode. `terminal_*` works in direct mode only
+when the grant has `terminal` scope and the connect result reports
+`capabilities.terminal: true`, which requires the target's Remote Terminal
+setting ON with its current terms accepted. Otherwise do not attempt shell
+work. Launching through a shell or script host stays unavailable online. A
+terminal belongs to its direct session and closes with it; see
+[Remote Terminal](terminal.md). Use the live
 schema and the target's response to check each tool. Supported targets keep
 held-key and button down/up as standalone calls owned by the session and check
 each step of a direct batch individually.
@@ -104,7 +110,7 @@ identity and applies any block on the launch tool.
 | --- | --- |
 | `observe` | Discovery, status, connecting by `hostId`, screenshots, snapshots, find/get/is, lists and wait |
 | `input` | UI mutations and other input-scoped `remote_desktop_*` tools.  |
-| `terminal` | Not available in online sessions |
+| `terminal` | `terminal_*` on a direct session whose connect result reports `capabilities.terminal: true`. Shell or script-host launches stay unavailable online. |
 
 `tools/list` shows the tools available to the grant. The updated online catalog
 lists `remote_desktop_batch` for `observe` grants. The gateway checks the required
@@ -134,7 +140,7 @@ into a GUI terminal with `input` only.
 - Each call has about 55 seconds. `BRIDGE_TIMEOUT` and `REGION_UNAVAILABLE` do
   not prove that nothing happened: observe before repeating any mutation.
 - A direct session closes after about 15 minutes without a call, together with
-  anything it owns. For long work, keep calls spaced within that window. If the
+  anything it owns, including its terminals and commands still running in them. For long work, keep calls spaced within that window. If the
   session closed, `MCP_SESSION_NOT_OWNED` follows: connect again and observe the
   target before repeating any mutation.
 - Results up to about 5 MiB are returned inline. Prefer `remote_desktop_snapshot`
