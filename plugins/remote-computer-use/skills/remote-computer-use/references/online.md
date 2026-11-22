@@ -111,6 +111,7 @@ identity and applies any block on the launch tool.
 | `observe` | Discovery, status, connecting by `hostId`, screenshots, snapshots, find/get/is, lists and wait |
 | `input` | UI mutations and other input-scoped `remote_desktop_*` tools.  |
 | `terminal` | `terminal_*` on a direct session whose connect result reports `capabilities.terminal: true`. Shell or script-host launches stay unavailable online. |
+| `files` | Send an authorized file to the temporary inbox of the connected target PC. |
 
 `tools/list` shows the tools available to the grant. The updated online catalog
 lists `remote_desktop_batch` for `observe` grants. The gateway checks the required
@@ -122,6 +123,46 @@ which scope the task needs and let them reauthorize or create a new key. Never
 reach the same effect through a lower-scope tool, for example by typing commands
 into a GUI terminal with `input` only.
 
+## Send a File to the Target PC
+
+Verify that `tools/list` includes `remote_file_receive` and that
+`remote_connect` returns `structuredContent.capabilities.files: true` before
+uploading. The account owner must select **File transfer** (`files`) when
+issuing an API key or approving OAuth. Use it only for files the user has
+authorized you to send to the selected target. The agent needs access to the
+file bytes and an HTTPS client that uses the session's opening grant and network.
+If either is unavailable, explain the limitation.
+
+1. Open the approved direct session and keep its `sessionId`. Free supports
+   **3 MiB** per file. Pro, Teams and Enterprise support **30 MiB** per file.
+   Measure the original bytes before encoding.
+2. Send `POST https://mcp.airdesk.co.kr/mcp/files` with
+   `Authorization: Bearer <credential>` and `Content-Type: application/json`.
+   For a nonempty file up to 3 MiB, send `{ sessionId, filename, sha256, data }`.
+   Use a basename for `filename`, the lowercase hexadecimal SHA-256 of the
+   full file for `sha256`, and standard Base64 of the bytes for `data`.
+3. For a file over 3 MiB on a supported plan, send the same fields for each
+   part in order, adding `totalBytes` for the full size and a zero-based
+   `index`. Each part carries 3 MiB of raw bytes except the last. Encode each
+   part separately and keep the same full-file `sha256`. Start without a
+   `fileId` and include the returned `fileId` in each subsequent request.
+4. When the upload returns `201` and `receivedParts` equals `totalParts`,
+   call `remote_file_receive` with `{ sessionId, fileId }` as a standalone
+   tool. Check its `structuredContent.path` before using that target path
+   in a file picker, for example when attaching an image to a blog post.
+
+AirDesk keeps file bytes in private S3 and delivers them to the target over
+authenticated HTTPS. The host verifies the assembled file and saves it in a
+private temporary folder. S3 objects and the local copy are each eligible for
+automatic cleanup 24 hours after creation. If AirDesk is stopped when the
+local file expires, it cleans up on the next start.
+
+For an upload `413`, check the plan limit and part size. For `401` or `403`,
+check the credential, `files` scope and session access. For `409`, check the
+target's capability, the active session and the part sequence. Honor
+`Retry-After` on `429`. If receiving times out, inspect the target before
+retrying to avoid creating a second copy.
+
 ## Online Restrictions
 
 - **Forced shortcuts.** `force:true` on `remote_desktop_press` or
@@ -131,8 +172,8 @@ into a GUI terminal with `input` only.
 - **Denied arguments.** The updated online tool schemas omit `output_path`,
   `out`, `image`, `file_url`, `pointer_image`, `cwd`, `env` and `cdp`.
   The gateway continues to reject these arguments for every scope, including
-  inside a batch (`MCP_ARGUMENT_NOT_ALLOWED`). Return data inline and do not
-  look for another way to write files.
+  inside a batch (`MCP_ARGUMENT_NOT_ALLOWED`). Use the dedicated [file transfer
+  workflow](#send-a-file-to-the-target-pc) to deliver an authorized file.
 - Use the exact allowed account-owned host ID from discovery. The opening grant owns the direct session.
 
 ## Time, Size and Cost

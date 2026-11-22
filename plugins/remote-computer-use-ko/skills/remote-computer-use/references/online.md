@@ -34,6 +34,7 @@ AirDesk 서버가 네이티브 stdio 프로세스가 아니라 온라인 게이�
 | `observe` | 탐색, 상태, `hostId`로 연결, 스크린샷, 스냅샷, find/get/is, 목록, wait.  |
 | `input` | 승인된 클릭, 입력, 앱 실행, 클립보드 등 대상이 허용한 `remote_desktop_*` 조작.  |
 | `terminal` | 연결 결과에 `capabilities.terminal: true`가 있는 직접 세션의 `terminal_*`. 셸이나 스크립트 호스트를 통한 실행은 온라인에서 사용할 수 없음 |
+| `files` | [대상 PC로 파일 전달](#대상-pc로-파일-전달). 키 발급 또는 OAuth 승인에서 별도로 선택해야 합니다. |
 
 `tools/list`에는 현재 권한으로 쓸 수 있는 도구가 나옵니다. 갱신된 온라인 도구 목록은
 `observe` 권한에도 `remote_desktop_batch`를 표시합니다. 게이트웨이는 배치에 담긴 각
@@ -97,6 +98,35 @@ Windows의 `remote_desktop_list_windows_resilient`와 알림 도구는 호스트
 항목이 있으면 항상 차단이 우선합니다. 대상은 찾은 앱의 실제 식별자를 검사하고 앱 실행 도구에 대한 차단
 설정도 적용합니다.
 
+## 대상 PC로 파일 전달
+
+사용자가 해당 대상 PC로 보내도록 승인한 이미지나 파일만 전달하세요. 사용 전에 `files` 범위,
+현재 `tools/list`의 `remote_file_receive`, `remote_connect` 결과의 `capabilities.files: true`를
+모두 확인하세요. 클라이언트에는 원본 파일을 읽고,
+연결에 사용한 동일한 API 키나 OAuth 자격으로 같은 네트워크에서 HTTPS 요청을 보낼 수 있는 기능이 필요합니다.
+커넥터가 업로드 요청을 보낼 수 없으면 제한을 설명하세요.
+
+1. `POST https://mcp.airdesk.co.kr/mcp/files` 요청에 `Authorization: Bearer <TOKEN>`과
+   `Content-Type: application/json`을 사용하세요. 3 MiB 이하의 비어 있지 않은 파일은
+   `{sessionId, filename, sha256, data}`로 보냅니다. `filename`은 디렉터리 없는 파일명,
+   `sha256`은 원본 파일 전체의 소문자 SHA-256 16진수, `data`는 파일 바이트의 표준 Base64입니다.
+2. 파일당 한도는 인코딩 전 기준으로 **Free 3 MiB, Pro·Teams·Enterprise 30 MiB**입니다.
+   3 MiB를 넘는 파일은 마지막을 제외하고 정확히 3 MiB씩 나눠 순서대로 POST하세요. 모든 요청에
+   동일한 `sessionId`, `filename`, `sha256`과 원본 크기 `totalBytes`, 0부터 시작하는 `index`를
+   넣습니다. 첫 요청에서 `fileId`를 생략하고 이후 조각에 응답의 `fileId`를 전달하세요.
+3. `201` 응답에서 `receivedParts`와 `totalParts`가 같아지면 `remote_file_receive`를 단독으로 호출해
+   `{sessionId, fileId}`를 넘기세요. 대상이 전체 해시를 확인한 뒤 돌려주는 `structuredContent.path`는
+   대상 PC의 저장 경로입니다. 예를 들어 블로그에 이미지를 첨부할 때 대상 브라우저의 파일 선택 창에서
+   이 경로를 사용하세요.
+
+파일은 계정 홈 리전의 비공개 S3에 임시 저장되며, 대상 PC도 전용 임시 폴더에 저장합니다. 각각
+저장 후 24시간이 지나면 자동 정리 대상이 됩니다. PC가 꺼져 있는 동안 만료된 파일은 AirDesk가
+다음에 실행될 때 정리합니다.
+
+`413`은 요금제 또는 조각 크기 제한입니다. `403`이나 `409`가 오면 `files` 권한과 동일한 활성 세션,
+조각 순서를 확인하세요. `429`는 `Retry-After`를 따르세요. 수신 호출이 시간 초과되면 다음 요청 전에
+대상 상태를 확인하세요.
+
 ## 온라인 제한 사항
 
 - **강제 단축키.** 온라인에서 `remote_desktop_press`와 `remote_desktop_key_down`에
@@ -105,8 +135,8 @@ Windows의 `remote_desktop_list_windows_resilient`와 알림 도구는 호스트
 
 - **금지된 인자.** 갱신된 온라인 도구 스키마에서 `output_path`, `out`, `image`, `file_url`,
   `pointer_image`, `cwd`, `env`, `cdp`가 제외됩니다. 게이트웨이는 배치 내부를 포함해
-  모든 범위에서 이 인자를 계속 거부합니다(`MCP_ARGUMENT_NOT_ALLOWED`). 결과를 응답으로
-  받고, 파일을 쓰는 다른 방법을 찾지 마세요.
+  모든 범위에서 이 인자를 계속 거부합니다(`MCP_ARGUMENT_NOT_ALLOWED`). 결과는 응답으로 받으세요.
+  승인된 파일을 보내는 경우 [대상 PC로 파일 전달](#대상-pc로-파일-전달) 절차를 따르세요.
 - 승인된 계정 소유 대상의 호스트 ID와 연결에 사용한 키를 사용하세요.
 
 ## 시간, 크기, 비용
