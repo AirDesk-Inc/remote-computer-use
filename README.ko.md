@@ -4,7 +4,7 @@
 
 # AirDesk Remote Computer Use
 
-[English](README.md) · [설치 안내](skills/remote-computer-use/references/setup.md) · [보안](SECURITY.md) · [검증 범위](docs/validation.md)
+[English](README.md) · [설치 안내](skills/remote-computer-use/references/setup.md) · [보안](SECURITY.md) · [검증 범위](docs/validation.md) · [웹사이트](https://airdesk.co.kr/ko/mcp) · [MCP Registry](docs/mcp-registry.md)
 
 AirDesk의 네이티브 MCP 서버를 통해 허가된 원격 컴퓨터의 화면을 확인하고,
 마우스·키보드·원격 터미널, Windows/macOS 접근성 자동화와 브라우저 UI를 agent-desktop으로 제어하는

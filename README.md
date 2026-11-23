@@ -4,7 +4,7 @@
 
 # AirDesk Remote Computer Use
 
-[한국어](README.ko.md) · [Setup](skills/remote-computer-use/references/setup.md) · [Security](SECURITY.md) · [Validation](docs/validation.md)
+[한국어](README.ko.md) · [Setup](skills/remote-computer-use/references/setup.md) · [Security](SECURITY.md) · [Validation](docs/validation.md) · [Website](https://airdesk.co.kr/en/mcp) · [MCP Registry](docs/mcp-registry.md)
 
 An open-source **Agent Skill** for operating authorized remote computers through
 AirDesk's native MCP server: screenshots, mouse and keyboard input, remote

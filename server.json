@@ -1,0 +1,21 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.AirDesk-Inc/remote-computer-use",
+  "title": "AirDesk Remote Desktop",
+  "description": "Remote desktop MCP: let AI see, click, type and run terminal commands on your own Windows or Mac.",
+  "version": "0.4.14",
+  "websiteUrl": "https://airdesk.co.kr/en/mcp",
+  "repository": {
+    "url": "https://github.com/AirDesk-Inc/remote-computer-use",
+    "source": "github"
+  },
+  "icons": [
+    { "src": "https://airdesk.co.kr/icon.svg", "mimeType": "image/svg+xml", "sizes": ["any"] }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.airdesk.co.kr/mcp"
+    }
+  ]
+}
