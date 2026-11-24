@@ -4,6 +4,8 @@
 
 # AirDesk Remote Computer Use
 
+[![mcptry](https://mcptry.com/badge/io.github.AirDesk-Inc/remote-computer-use)](https://mcptry.com/servers/io.github.AirDesk-Inc/remote-computer-use)
+
 [한국어](README.ko.md) · [Setup](skills/remote-computer-use/references/setup.md) · [Security](SECURITY.md) · [Validation](docs/validation.md) · [Website](https://airdesk.co.kr/en/mcp) · [MCP Registry](docs/mcp-registry.md)
 
 An open-source **Agent Skill** for operating authorized remote computers through
