@@ -13,17 +13,26 @@ the skill and the native server, not a stdio MCP server, so it is not listed und
 - OAuth discovery (`/.well-known/oauth-protected-resource`) works from a real
   client.
 - `https://airdesk.co.kr/en/mcp` is deployed (it is the `websiteUrl`).
-- Bump `version` in `server.json` for every published metadata change; the
-  Registry rejects republishing an existing version.
+- `server.json` `version` matches `package.json` (`npm run check:package`
+  enforces this). The Registry rejects republishing an existing version, so
+  bump both together for every release or metadata change.
 
 ## Publish
 
-The `io.github.AirDesk-Inc/*` namespace requires GitHub authentication by an
-**owner** of the `AirDesk-Inc` organization.
+Publishing is automatic. [`publish-mcp-registry.yml`](../.github/workflows/publish-mcp-registry.yml)
+runs when `server.json` changes on `main` (or by hand from the Actions tab). It
+skips a version that is already listed, verifies the pinned `mcp-publisher`
+release with Sigstore, and authenticates with GitHub OIDC, so no token is stored
+in the repository. Bump `MCP_PUBLISHER_VERSION` deliberately.
+
+To publish by hand instead, the `io.github.AirDesk-Inc/*` namespace requires an
+**owner** of the `AirDesk-Inc` organization and a credential that can read the
+organization role. The interactive `mcp-publisher login github` flow cannot, so
+use a classic token with `read:org`:
 
 ```sh
 # Install mcp-publisher from https://github.com/modelcontextprotocol/registry/releases
-mcp-publisher login github
+mcp-publisher login github --token "$(gh auth token)"
 mcp-publisher publish
 ```
 

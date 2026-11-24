@@ -2,10 +2,13 @@ import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { packageRoot, skillFiles } from '../lib/installer.mjs';
 import { languages, translatableFiles } from '../lib/bundle.mjs';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 
 assert(process.env.npm_execpath, 'Run with npm run check:package');
+const readJson = name => JSON.parse(readFileSync(path.join(packageRoot, name), 'utf8'));
+assert.equal(readJson('server.json').version, readJson('package.json').version,
+  'server.json version must match package.json so the MCP Registry workflow publishes each release');
 const tests = spawnSync(process.execPath, ['--test', 'tests/installer.test.mjs'], { cwd: packageRoot, stdio: 'inherit' });
 assert.equal(tests.status, 0, 'Installer tests failed');
 const plugins = spawnSync(process.execPath, ['scripts/build-plugins.mjs', '--check'], { cwd: packageRoot, stdio: 'inherit' });
